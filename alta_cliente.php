@@ -41,7 +41,7 @@ session_start();
                 </div>
                 <form action="alta_clientes_guarda.php" method="POST" class="row g-3">
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="inputCity" name="nombre" placeholder="NOMBRE O RAZON SOCIAL">
+                        <input type="text" class="form-control" id="inputCity" name="nombre" placeholder="NOMBRE O RAZON SOCIAL" required>
                     </div>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="inputAddress" name="contacto" placeholder="NOMBRE DEL CONTACTO">

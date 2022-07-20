@@ -1,8 +1,8 @@
 <?php
 session_start();
-/*if ((!$_SESSION['administrador']) || (!$_SESSION['mostrador'])) {
+if ((!$_SESSION['administrador']) || (!$_SESSION['mostrador'])) {
     header("Location: login.php");
-}*/
+}
 $dia_alta = date('j');
 $dia_expiret = date('j');
 ?>

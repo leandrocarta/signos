@@ -41,7 +41,7 @@ session_start();
                 </div>
                 <form action="alta_sub_categoria_guarda.php" method="POST" class="row g-3">
                     <div class="col-md-12">
-                        <input type="text" class="form-control" name="sub_categoria" style="text-transform:uppercase;" placeholder="INGRESE EL NOMBRE DE LA CATEGORÍA">
+                        <input type="text" class="form-control" name="sub_categoria" style="text-transform:uppercase;" placeholder="INGRESE EL NOMBRE DE LA CATEGORÍA" required>
                     </div>
                     <div class="col-md-6">
                         <button type="submit" class=" form-control btn btn-success">GUARDAR</button>

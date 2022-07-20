@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 ?>
@@ -13,7 +12,7 @@ session_start();
 
     <!-- Bootstrap CSS v5.2.0-beta1 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-
+   
     <script src="https://kit.fontawesome.com/5cd6077bf2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="sass/estilos.css">
 </head>
@@ -26,12 +25,11 @@ session_start();
         <div class="row">
             <div class="row">
                 <div class="col-md-11 py-4">
-                    <h5>ELIMINAR PROVEEDORES</h5>
+                    <h5>MODIFICAR PROVEEDORES</h5>
                     <form action="" method="POST">
-                        <label for="elimina_cliente">BUSCAR PROVEEDOR</label>
-                        <input class="form-control" type="text" name="elimina_proveedor" id="elimina_proveedor">
+                        <label for="update_proveedor">BUSCAR PROVEEDOR</label>
+                        <input class="form-control" type="text" name="update_proveedor" id="update_proveedor">
                     </form>
-
                 </div>
                 <div class="col-md-1">
                     <form action="index.php">
@@ -45,10 +43,10 @@ session_start();
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">PROVEEDOR</th>
+                                <th scope="col">PROVEEDOR</th>                                
                                 <th scope="col">CUIT - DNI</th>
                                 <th scope="col">DIRECCIÓN </th>
-                                <th scope="col">ELIMINAR </th>
+                                <th scope="col">EDITAR </th>
                             </tr>
                         </thead>
                         <tbody id="content">
@@ -61,15 +59,15 @@ session_start();
     </div>
     <script>
         getData()
-        document.getElementById("elimina_cliente").addEventListener("keyup", getData)
+        document.getElementById("update_proveedor").addEventListener("keyup", getData)
 
         function getData() {
-            let input = document.getElementById("elimina_proveedor").value
+            let input = document.getElementById("update_proveedor").value
             let content = document.getElementById("content")
-            let url = "proveedor_elimina.php";
+            let url = "proveedor_update.php";
 
             let formaData = new FormData;
-            formaData.append('elimina_proveedor', input);
+            formaData.append('update_proveedor', input);
             fetch(url, {
 
                     method: "POST",
@@ -86,24 +84,24 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <?php
-  if (isset($_SESSION['proveedor_eliminado'])) { ?>
-    <script>
-      swal({
-        title: '<?php echo $_SESSION['proveedor_eliminado']; ?>',
-        text: "El Proveedor se Eliminó correctamente.",
-        icon: "success",
-        button: "Continue aquí!!",
+<?php
+if (isset($_SESSION['proveedor_modificado'])) { ?>
+<script>
+  swal({
+    title: '<?php echo $_SESSION['proveedor_modificado']; ?>',
+    text: "El Proveedor se Modificó correctamente.",
+    icon: "success",
+    button: "Continue aquí!!",
 
-      });
-    </script>
+  });
+</script>
 
-  <?php
-    unset($_SESSION['proveedor_eliminado']);
-  }
+<?php
+unset($_SESSION['proveedor_modificado']);
+}
 
-  ?>
-   
+?>
+
 
 </body>
 
