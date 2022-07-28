@@ -36,7 +36,7 @@ if($num_rows > 0){
         $html .= '<td>'.$row['nombre'].'</td>';        
         $html .= '<td>'.$row['cuit'].'</td>';
         $html .= '<td>'.$row['direccion'].'</td>';        
-        $html .= '<td><a href="proveedor_update_process.php?id='. $row['id'].'" class="btn btn-success" >MODIFICAR</a></td>';
+        $html .= '<td><a href="proveedor_update_process.php?id='. $row['id'].'" style="color:white;" class="btn btn-warning" >EDITAR</a></td>';
         $html .= '</tr>';
 
     }

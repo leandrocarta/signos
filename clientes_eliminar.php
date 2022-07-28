@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 ?>
@@ -44,9 +43,9 @@ session_start();
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">CLIENTE</th>
-                                <th scope="col">CUIT - DNI</th>
+                                <th scope="col">CUIT</th>
                                 <th scope="col">DIRECCIÓN </th>
                                 <th scope="col">ELIMINAR </th>
                             </tr>
@@ -80,6 +79,14 @@ session_start();
                 }).catch(err => console.log(err))
         }
     </script>
+    <script>
+        foco();
+
+        function foco() {
+
+            document.getElementById("elimina_cliente").focus();
+        }
+    </script>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
 
@@ -87,23 +94,23 @@ session_start();
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <?php
-  if (isset($_SESSION['cliente_eliminado'])) { ?>
-    <script>
-      swal({
-        title: '<?php echo $_SESSION['cliente_eliminado']; ?>',
-        text: "El Cliente se Eliminó correctamente.",
-        icon: "success",
-        button: "Continue aquí!!",
+    if (isset($_SESSION['cliente_eliminado'])) { ?>
+        <script>
+            swal({
+                title: '<?php echo $_SESSION['cliente_eliminado']; ?>',
+                text: "El Cliente se Eliminó correctamente.",
+                icon: "success",
+                button: "Continue aquí!!",
 
-      });
-    </script>
+            });
+        </script>
 
-  <?php
-    unset($_SESSION['cliente_eliminado']);
-  }
+    <?php
+        unset($_SESSION['cliente_eliminado']);
+    }
 
-  ?>
-   
+    ?>
+
 
 </body>
 

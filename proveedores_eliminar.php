@@ -44,9 +44,9 @@ session_start();
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">PROVEEDOR</th>
-                                <th scope="col">CUIT - DNI</th>
+                                <th scope="col">CUIT</th>
                                 <th scope="col">DIRECCIÓN </th>
                                 <th scope="col">ELIMINAR </th>
                             </tr>
@@ -78,6 +78,14 @@ session_start();
                 .then(data => {
                     content.innerHTML = data
                 }).catch(err => console.log(err))
+        }
+    </script>
+    <script>
+        foco();
+
+        function foco() {
+
+            document.getElementById("elimina_proveedor").focus();
         }
     </script>
     <!-- Bootstrap JavaScript Libraries -->

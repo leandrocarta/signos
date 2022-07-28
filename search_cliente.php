@@ -34,7 +34,7 @@ if($num_rows > 0){
     while($row = $resultado->fetch_assoc()) {
         $html .= '<tr>';
         $html .= '<td>'.$row['id'].'</td>';
-        $html .= '<td>'.$row['nombre'].'</td>';
+        $html .= '<td> <input value='.$row['nombre'].'></td>';
         $html .= '<td>'.$row['nombre_contacto'].'</td>';
         $html .= '<td>'.$row['cuit'].'</td>';
         $html .= '<td>'.$row['direccion'].'</td>';

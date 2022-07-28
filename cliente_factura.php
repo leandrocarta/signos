@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 ?>
@@ -21,15 +22,16 @@ session_start();
     <?php
     include("nav.php");
     ?>
-    <div class="container bg-secondary ">
+    <div class="container-fluid bg-gray ">
         <div class="row">
             <div class="row">
                 <div class="col-md-11 py-4">
-                    <h5 style="color: white;">MODIFICAR PROVEEDORES</h5>
+                    <h5>MODIFICAR CLIENTES</h5>
                     <form action="" method="POST">
-                        <label style="color: white;" for="update_proveedor">BUSCAR PROVEEDOR</label>
-                        <input class="form-control" type="text" name="update_proveedor" id="update_proveedor">
+                        <label for="update_cliente">BUSCAR CLIENTE</label>
+                        <input class="form-control" type="text" name="update_cliente" id="update_cliente">
                     </form>
+
                 </div>
                 <div class="col-md-1">
                     <form action="index.php">
@@ -43,7 +45,7 @@ session_start();
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">PROVEEDOR</th>                                
+                                <th scope="col">CLIENTE</th>                                
                                 <th scope="col">CUIT</th>
                                 <th scope="col">DIRECCIÓN </th>
                                 <th scope="col">EDITAR </th>
@@ -59,15 +61,15 @@ session_start();
     </div>
     <script>
         getData()
-        document.getElementById("update_proveedor").addEventListener("keyup", getData)
+        document.getElementById("update_cliente").addEventListener("keyup", getData)
 
         function getData() {
-            let input = document.getElementById("update_proveedor").value
+            let input = document.getElementById("update_cliente").value
             let content = document.getElementById("content")
-            let url = "proveedor_update.php";
+            let url = "cliente_update.php";
 
             let formaData = new FormData;
-            formaData.append('update_proveedor', input);
+            formaData.append('update_cliente', input);
             fetch(url, {
 
                     method: "POST",
@@ -78,12 +80,12 @@ session_start();
                 }).catch(err => console.log(err))
         }
     </script>
-    <script>
+     <script>
         foco();
 
         function foco() {
-
-            document.getElementById("update_proveedor").focus();
+           
+            document.getElementById("update_cliente").focus();
         }
     </script>
     <!-- Bootstrap JavaScript Libraries -->
@@ -92,23 +94,7 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<?php
-if (isset($_SESSION['proveedor_modificado'])) { ?>
-<script>
-  swal({
-    title: '<?php echo $_SESSION['proveedor_modificado']; ?>',
-    text: "El Proveedor se Modificó correctamente.",
-    icon: "success",
-    button: "Continue aquí!!",
 
-  });
-</script>
-
-<?php
-unset($_SESSION['proveedor_modificado']);
-}
-
-?>
 
 
 </body>

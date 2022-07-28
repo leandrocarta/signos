@@ -1,9 +1,10 @@
 <?php
 session_start();
-/*if ((!$_SESSION['administrador']) || (!$_SESSION['mostrador'])) {
+$admin = $_SESSION['admin'];
+$mostrador = $_SESSION['mostrador'];
+if (!$admin || !$mostrador) {
     header("Location: login.php");
-}*/
-
+}
 ?>
 
 <!doctype html>

@@ -1,8 +1,11 @@
 <?php
 session_start();
-/*if ((!$_SESSION['administrador']) || (!$_SESSION['mostrador'])) {
+$admin = $_SESSION['admin'];
+$mostrador = $_SESSION['mostrador'];
+if (!$admin || !$mostrador) {
     header("Location: login.php");
-}*/
+}
+
 
 ?>
 
@@ -35,7 +38,7 @@ session_start();
                     </div>
                     <div class="col-md-1">
                         <form action="index.php">
-                            <button class="btn" > <i class="fas fa-window-close"></i></button>
+                            <button class="btn"> <i class="fas fa-window-close"></i></button>
                         </form>
                     </div>
                 </div>
@@ -83,15 +86,15 @@ session_start();
                         <input type="text" class="form-control" id="inputAddress" name="telefono" placeholder="Teléfono fijo">
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" id="inputAddress" name="movil" placeholder="WhatsApp (543413672066)">
+                        <input type="text" class="form-control" id="inputAddress" name="movil" placeholder="WhatsApp (543413672066)" required>
                     </div>
                     <div class="col-md-6">
                         <button type="submit" class=" form-control btn btn-success">GUARDAR</button>
                     </div>
                     <div class="col-md-6">
-                       <a href="" type="submit" class="form-control btn btn-danger">CANCELAR - LIMPIAR</a>
+                        <a href="" type="submit" class="form-control btn btn-danger">CANCELAR - LIMPIAR</a>
                     </div>
-                </form>                
+                </form>
             </div>
         </div>
 
@@ -101,23 +104,30 @@ session_start();
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <?php
-  if (isset($_SESSION['cliente_reg'])) { ?>
-    <script>
-      swal({
-        title: '<?php echo $_SESSION['cliente_reg']; ?>',
-        text: "El registro se creo correctamente.",
-        icon: "success",
-        button: "Continue aquí!!",
+    if (isset($_SESSION['cliente_reg'])) { ?>
+        <script>
+            swal({
+                title: '<?php echo $_SESSION['cliente_reg']; ?>',
+                text: "El registro se creo correctamente.",
+                icon: "success",
+                button: "Continue aquí!!",
 
-      });
+            });
+        </script>
+
+    <?php
+        unset($_SESSION['cliente_reg']);
+    }
+
+    ?>
+ <script>
+        foco();
+        function foco(){
+ document.getElementById("focoCliente").blur();
+ document.getElementById("inputCity").focus();
+}
+
     </script>
-
-  <?php
-    unset($_SESSION['cliente_reg']);
-  }
-
-  ?>
-
 </body>
 
 </html>

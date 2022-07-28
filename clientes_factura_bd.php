@@ -2,11 +2,11 @@
 require('conexion.php');
 
 
-$columns = ['id', 'nombre', 'cuit', 'direccion'];
+$columns = ['id', 'nombre', 'cuit', 'direccion', 'localidad', 'whatsapp'];
 
 $tabla = "clientes";
 
-$campo = $conexion_bd->real_escape_string($_POST['update_cliente']) ?? null;
+$campo = $conexion_bd->real_escape_string($_POST['campo']) ?? null;
 
 $where = '';
 if($campo != null){
@@ -33,17 +33,17 @@ if($num_rows > 0){
     while($row = $resultado->fetch_assoc()) {
         $html .= '<tr>';
         $html .= '<td>'.$row['id'].'</td>';
-        $html .= '<td>'.$row['nombre'].'</td>';        
+        $html .= '<td> <input value='.$row['nombre'].'></td>';        
         $html .= '<td>'.$row['cuit'].'</td>';
-        $html .= '<td>'.$row['direccion'].'</td>';        
-        $html .= '<td><a href="cliente_update_process.php?id='. $row['id'].'" style="color:white;" class="btn btn-warning" >EDITAR</a></td>';
+        $html .= '<td>'.$row['direccion'].'</td>';
+        $html .= '<td>'.$row['localidad'].'</td>';       
+        $html .= '<td>'.$row['whatsapp'].'</td>';        
         $html .= '</tr>';
-
     }
 
 }else {
     $html .= '<tr>';
-    $html .= '<td colspan="5">Sin Resultados</td>';
+    $html .= '<td colspan="7">Sin Resultados</td>';
     $html .= '</tr>';
 }
 echo json_encode($html, JSON_UNESCAPED_UNICODE);

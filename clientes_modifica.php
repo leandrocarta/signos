@@ -22,20 +22,20 @@ session_start();
     <?php
     include("nav.php");
     ?>
-    <div class="container-fluid bg-gray ">
+    <div class="container bg-secondary ">
         <div class="row">
             <div class="row">
                 <div class="col-md-11 py-4">
-                    <h5>MODIFICAR CLIENTES</h5>
+                    <h5 style="color: white;">MODIFICAR CLIENTES</h5>
                     <form action="" method="POST">
-                        <label for="update_cliente">BUSCAR CLIENTE</label>
+                        <label style="color: white;" for="update_cliente">BUSCAR</label>
                         <input class="form-control" type="text" name="update_cliente" id="update_cliente">
                     </form>
 
                 </div>
                 <div class="col-md-1">
                     <form action="index.php">
-                        <button class="btn"> <i class="fas fa-window-close"></i></button>
+                        <button class="btn"> <i class="fas fa-window-close" ></i></button>
                     </form>
                 </div>
             </div>
@@ -44,9 +44,9 @@ session_start();
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">CLIENTE</th>                                
-                                <th scope="col">CUIT - DNI</th>
+                                <th scope="col">CUIT</th>
                                 <th scope="col">DIRECCIÓN </th>
                                 <th scope="col">EDITAR </th>
                             </tr>
@@ -78,6 +78,14 @@ session_start();
                 .then(data => {
                     content.innerHTML = data
                 }).catch(err => console.log(err))
+        }
+    </script>
+     <script>
+        foco();
+
+        function foco() {
+           
+            document.getElementById("update_cliente").focus();
         }
     </script>
     <!-- Bootstrap JavaScript Libraries -->

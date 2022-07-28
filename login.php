@@ -19,6 +19,7 @@ session_destroy();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+   
 </head>
 
 <body class="d-flex align-items-center">
@@ -37,13 +38,13 @@ session_destroy();
                             <div class="mb-2 d-flex">
                                 <span class="col-md-1 col-md-offset-2"><i class="fa fa-user bigicon-login"></i></span>
                                 <div class="col">
-                                    <input id="fname" name="usuario" type="text" placeholder="Ingresa tu Usuario" class="form-control" required>
+                                    <input id="fname" name="usuario" type="text" placeholder="Ingresa tu Usuario" class="form-control" required autocomplete="off">
                                 </div>
                             </div>
                             <div class="mb-2 d-flex">
                                 <span class="col-md-1 col-md-offset-2"><i class="fas fa-unlock-alt bigicon-login"></i></span>
                                 <div class="col">
-                                    <input id="lname" name="password" type="password" placeholder="Ingresa tu Password" class="form-control" required>
+                                    <input id="lname" name="password" type="password" placeholder="Ingresa tu Password" class="form-control" autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="d-grid" id="">
@@ -62,13 +63,13 @@ session_destroy();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-
+    
     <?php
     if (isset($_SESSION['no_existe_usuario'])) { ?>
         <script>
             swal({
-                title: '<?php echo $_SESSION['no_existe_usuario']; ?>',
-                text: "Sus datos NO existen \n vuelva a intentarlo",
+                title: 'Oops...!!!',
+                text: "El usuario ingresado NO existe \n vuelva a intentarlo",
                 icon: "error",
                 button: "Volver al Sitio!",
 
@@ -77,6 +78,21 @@ session_destroy();
 
     <?php
         session_unset($_SESSION['no_existe_usuario']);
+    }
+    ?>
+     <?php
+    if (isset($_SESSION['pass_incorrecto'])) { ?>
+        <script>
+            swal({
+                title: 'Algo salio mal..',
+                text: "El password está equivocado.. ",
+                icon: "error",
+                button: "Volver al Sitio!",
+
+            });
+        </script>
+    <?php
+        session_unset($_SESSION['pass_incorrecto']);
     }
     ?>
 

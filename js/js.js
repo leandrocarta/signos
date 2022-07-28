@@ -31,3 +31,17 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     // end if innerWidth
 });
+
+/*document.addEventListener("keydown", flechaPress);
+
+function flechaPress(event) {
+    const flechaPresionada = event.key.toLowerCase();
+    console.log(flechaPresionada);
+    if (flechaPresionada == 'enter') {
+        let $enter = 0;
+
+        // document.getElementById("focoCliente").blur();
+        //document.getElementById("focoProveedor").focus();
+    }
+
+}*/

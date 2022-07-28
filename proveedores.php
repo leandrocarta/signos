@@ -37,14 +37,14 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">PROVEEDOR</th>
-                                <th scope="col">CONTACTO</th>
-                                <th scope="col">CUIT - DNI</th>
+                                <th scope="col">VENDEDOR</th>
+                                <th scope="col">CUIT</th>
                                 <th scope="col">DIRECCIÓN </th>
                                 <th scope="col">LOCALIDAD</th>
-                                <th scope="col">TEL FIJO</th>
-                                <th scope="col">TEL MOVIL</th>
+                                <th scope="col">TELÉFONO</th>
+                                <th scope="col">WHATSAPP</th>
                                 <th scope="col">EMAIL</th>
                                 <th scope="col">F. ALTA</th>
 
@@ -77,6 +77,14 @@
                 .then(data => {
                     content.innerHTML = data
                 }).catch(err => console.log(err))   
+        }
+    </script>
+    <script>
+        foco();
+
+        function foco() {
+
+            document.getElementById("campo").focus();
         }
     </script>
     <!-- Bootstrap JavaScript Libraries -->

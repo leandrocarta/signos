@@ -8,21 +8,20 @@ if (!$admin || !$mostrador) {
 ?>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary mb-1">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <div class="collapse navbar-collapse d-flex justify-content-between" id="main_nav">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown" id="myDropdown">
                         <a class="nav-link dropdown-toggle white" id="focoComprobantes" href="#" data-bs-toggle="dropdown"> COMPROBANTES </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="factura.php">FACTURA</a></li>
-                            
+                        <ul class="dropdown-menu">                            
+                            <li><a class="dropdown-item" href="#" style="background-color: #5594ed; color: white;">FACTURA</a></li>
+                            <li><a class="dropdown-item" href="">NUEVA</a></li>
                             <li><a class="dropdown-item" href="">CONSULTA</a></li>
-                            <li><hr class="dropdown-divider"></li>
-
-                            <li><a class="dropdown-item" href="#">PRESUPUESTO</a></li>
                             
-                            <li><a class="dropdown-item" href="">CONSULTA</a></li>
+                            <li><a class="dropdown-item" href="#"style="background-color: #5594ed; color: white;">PRESUPUESTO</a></li>
+                            <li><a class="dropdown-item" href="">NUEVO</a></li>
+                            <li><a class="dropdown-item" href="">CONSULTA</a></li>                            
                         </ul>
                     </li>
                     <li class="nav-item dropdown" id="myDropdown">
@@ -33,6 +32,18 @@ if (!$admin || !$mostrador) {
                             <li><a class="dropdown-item" href="clientes_modifica.php">EDITAR</a></li>
                             <li><a class="dropdown-item" href="clientes_eliminar.php">ELIMINAR</a></li>
                             <li><a class="dropdown-item disabled" href="#" aria-disabled="true"> CUENTA CORRIENTE </a></li>
+                            <li> <a class="dropdown-item" href="#" aria-disabled="true"> NOTA DE ENTREGA &raquo; </a>
+                                <ul class="submenu dropdown-menu">
+                                    <li><a class="dropdown-item" href="clientes_factura.php" aria-disabled="true">NUEVA</a></li>
+                                    <li><a class="dropdown-item disabled" href="#" aria-disabled="true">CONSULTA</a></li>
+                                </ul>
+                            </li>
+                            <li> <a class="dropdown-item disabled" href="#"> PRESUPUESTO &raquo; </a>
+                                <ul class="submenu dropdown-menu">
+                                    <li><a class="dropdown-item disabled" href="#">NUEVO</a></li>
+                                    <li><a class="dropdown-item disabled" href="#">CONSULTA</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown" id="myDropdown">
@@ -42,7 +53,13 @@ if (!$admin || !$mostrador) {
                             <li><a class="dropdown-item" href="proveedores.php">CONSULTAS</a></li>
                             <li><a class="dropdown-item" href="proveedores_modifica.php">EDITAR</a></li>
                             <li><a class="dropdown-item" href="proveedores_eliminar.php">ELIMINAR</a></li>
-                            <li><a class="dropdown-item disabled" href="#"> CUENTA CORRIENTE </a></li>                            
+                            <li><a class="dropdown-item disabled" href="#"> CUENTA CORRIENTE </a></li>
+                            <li> <a class="dropdown-item disabled" href="#"> NOTA DE PEDIDO &raquo; </a>
+                                <ul class="submenu dropdown-menu">
+                                    <li><a class="dropdown-item disabled" href="#">NUEVA</a></li>
+                                    <li><a class="dropdown-item disabled" href="#">CONSULTA</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown" id="myDropdown">
