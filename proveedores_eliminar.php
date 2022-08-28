@@ -22,13 +22,13 @@ session_start();
     <?php
     include("nav.php");
     ?>
-    <div class="container-fluid bg-gray ">
+    <div class="container-fluid bg-secondary ">
         <div class="row">
             <div class="row">
                 <div class="col-md-11 py-4">
-                    <h5>ELIMINAR PROVEEDORES</h5>
+                    <h5 style="color: white;">ELIMINAR PROVEEDORES</h5>
                     <form action="" method="POST">
-                        <label for="elimina_cliente">BUSCAR PROVEEDOR</label>
+                        <label style="color: white;" for="elimina_cliente">BUSCAR PROVEEDOR</label>
                         <input class="form-control" type="text" name="elimina_proveedor" id="elimina_proveedor">
                     </form>
 

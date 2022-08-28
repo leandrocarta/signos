@@ -6,19 +6,18 @@ $columns = ['id', 'nombre', 'nombre_contacto', 'cuit', 'direccion'
 , 'localidad', 'tel_fijo', 'whatsapp', 'email', 'fecha_alta'];
 
 $tabla = "proveedores";
+$cont = count($columns);
 
 $campo = $conexion_bd->real_escape_string($_POST['campo']) ?? null;
+//$array = explode('', $campo);
+
+ //print_r($array);
 
 $where = '';
 if($campo != null){
 $where = "WHERE (";
 
-$cont = count($columns);
-
-for($i = 0; $i < $cont; $i++){
-    $where .= $columns[$i] . " LIKE'%" . $campo . "%' OR ";
-}
-$where = substr_replace($where, "", -3);
+$where .= 'nombre' . " LIKE'%" . $campo . "%'";
 $where .= ")";
 }
 

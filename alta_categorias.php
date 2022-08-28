@@ -27,12 +27,12 @@ if (!$admin || !$mostrador) {
     <?php
     include("nav.php");
     ?>
-    <div class="container">
+    <div class="container bg-secondary">
         <div class="row">
-            <div class="col-lg-12 contenedor_gral bg-light">
+            <div class="col-lg-12 contenedor_gral">
                 <div class="row">
                     <div class="col-md-11 py-4">
-                        <h5>CREAR CATEGORÍAS</h5>
+                        <h5 style="color: white;">CREAR CATEGORÍAS</h5>
                     </div>
                     <div class="col-md-1">
                         <form action="index.php">
@@ -44,17 +44,19 @@ if (!$admin || !$mostrador) {
                     <div class="col-md-12">
                         <input type="text" class="form-control" name="categoria" required style="text-transform:uppercase;" placeholder="INGRESE EL NOMBRE DE LA CATEGORÍA">
                     </div>
-                    <div class="col-md-6">
-                        <button type="submit" class=" form-control btn btn-success">GUARDAR</button>
+                    <div class="col-md-4">
+                        <button type="submit" style="padding: 5px;" class=" form-control btn btn-success">GUARDAR</button>
                     </div>
-                    <div class="col-md-6">
-                        <a href="" type="submit" class="form-control btn btn-warning">CANCELAR - LIMPIAR</a>
+                    <div class="col-md-4">
+                        <a href="" type="submit" style="padding: 5px; color: white;" class="form-control btn btn-danger">CANCELAR - LIMPIAR</a>
                     </div>
-                    <p>
-                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            VER CATEGORÍAS CREADAS
-                        </a>
-                    </p>
+                    <div class="col-md-4">
+                        <p>
+                            <a class="btn btn-primary form-control" style="padding: 5px;" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                VER CATEGORÍAS CREADAS
+                            </a>
+                        </p>
+                    </div>
                     <div class="collapse" id="collapseExample">
                         <div class="card card-body">
                             <div class="container-fluid bg-gray ">
@@ -64,21 +66,23 @@ if (!$admin || !$mostrador) {
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">CATEGORÍAS</th>
+                                                        <th scope="col">N° CAT</th>
+                                                        <th scope="col">CATEGORÍA</th>
                                                         <th scope="col">ELIMINAR</th>
                                                     </tr>
                                                 </thead>
                                                 <?php
                                                 include('conexion.php');
-                                                $datos = mysqli_query($conexion_bd, "SELECT id, nombre FROM categorias ORDER BY nombre");
-                                                while ($listar_cat = mysqli_fetch_array($datos)) { 
+                                                $datos = mysqli_query($conexion_bd, "SELECT id_categoria, nombre FROM categorias ORDER BY nombre");
+                                                while ($listar_cat = mysqli_fetch_array($datos)) {
                                                 ?>
-                                                <tbody id="content">
-                                                    <tr>
-                                                    <td><?php echo $listar_cat['nombre'] ?></td>
-                                                    <td><a class="btn btn-danger" href="cat_eliminada.php?id=<?php echo $listar_cat['id'] ?>" >ELIMINAR</td>
-                                                    </tr>
-                                                </tbody>
+                                                    <tbody id="content">
+                                                        <tr>
+                                                            <td><?php echo $listar_cat['id_categoria'] ?></td>
+                                                            <td><?php echo $listar_cat['nombre'] ?></td>
+                                                            <td><a class="btn btn-danger" href="cat_eliminada.php?id=<?php echo $listar_cat['id_categoria'] ?> & nombre=<?php echo $listar_cat['nombre'] ?>">ELIMINAR</td>
+                                                        </tr>
+                                                    </tbody>
                                                 <?php
                                                 }
                                                 ?>
@@ -90,7 +94,7 @@ if (!$admin || !$mostrador) {
 
                         </div>
                     </div>
-                    
+
                 </form>
             </div>
         </div>
@@ -108,7 +112,6 @@ if (!$admin || !$mostrador) {
                 text: "La categoría se creó correctamente!!!",
                 icon: "success",
                 button: "Continue aquí!!",
-
             });
         </script>
     <?php
@@ -128,6 +131,37 @@ if (!$admin || !$mostrador) {
         </script>
     <?php
         unset($_SESSION['cat_eliminada']);
+    }
+    ?>
+    <?php
+    if (isset($_SESSION['not'])) { ?>
+        <script>
+            swal({
+                title: '<?php echo $_SESSION['not']; ?>',
+                text: "La categoría no se puede eliminar \n porque tiene sub categorias asociadas",
+                icon: "error",
+                button: "Continue aquí!!",
+
+            });
+        </script>
+    <?php
+        unset($_SESSION['not']);
+    }
+    ?>
+
+<?php
+    if (isset($_SESSION['no_disponible'])) { ?>
+        <script>
+            swal({
+                title: '<?php echo $_SESSION['no_disponible']; ?>',
+                text: "La categoría ingresada \n ya existe!!!",
+                icon: "error",
+                button: "Continue aquí!!",
+
+            });
+        </script>
+    <?php
+        unset($_SESSION['no_disponible']);
     }
     ?>
 

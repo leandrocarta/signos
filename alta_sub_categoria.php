@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('conexion.php');
 $admin = $_SESSION['admin'];
 $mostrador = $_SESSION['mostrador'];
 if (!$admin || !$mostrador) {
@@ -27,12 +28,12 @@ if (!$admin || !$mostrador) {
     <?php
     include("nav.php");
     ?>
-    <div class="container">
+    <div class="container bg-secondary">
         <div class="row">
-            <div class="col-lg-12 contenedor_gral bg-light">
+            <div class="col-lg-12 contenedor_gral">
                 <div class="row">
                     <div class="col-md-11 py-4">
-                        <h5>CREAR SUB CATEGORÍAS</h5>
+                        <h5 style="color: white;">CREAR SUB CATEGORÍAS</h5>
                     </div>
                     <div class="col-md-1">
                         <form action="index.php">
@@ -42,19 +43,40 @@ if (!$admin || !$mostrador) {
                 </div>
                 <form action="alta_sub_categoria_guarda.php" method="POST" class="row g-3">
                     <div class="col-md-12">
-                        <input type="text" class="form-control" name="sub_categoria" style="text-transform:uppercase;" placeholder="INGRESE EL NOMBRE DE LA CATEGORÍA" required>
+                        <div class="col-auto">
+                            <input type="text" class="form-control" name="sub_categoria" style="text-transform:uppercase;" placeholder="NUEVA SUB CATEGORÍA" required>
+                        </div>
+
+                        <div class="col-auto mt-3">
+                            <div id="emailHelp" class="form-text" style="color: white;">Relacione la categoría con la nueva sub categoría.</div>
+                            <select class="form-select" name="select_cat">
+                                <?php
+                                $categorias = mysqli_query($conexion_bd, "SELECT id_categoria, nombre FROM categorias ORDER BY nombre");
+                                while ($listarCat = mysqli_fetch_array($categorias)) {
+                                    $id_categoria = $listarCat['id_categoria'];
+                                    $nombre = $listarCat['nombre'];
+                                ?>
+                                    <option value="<?php echo $id_categoria ?>"><?php echo $nombre ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+
                     </div>
-                    <div class="col-md-6">
-                        <button type="submit" class=" form-control btn btn-success">GUARDAR</button>
+                    <div class="col-md-4">
+                        <button type="submit" style="padding: 5px;" class=" form-control btn btn-success">GUARDAR</button>
                     </div>
-                    <div class="col-md-6">
-                        <a href="" type="submit" class="form-control btn btn-warning">CANCELAR - LIMPIAR</a>
+                    <div class="col-md-4">
+                        <a href="" type="submit" style="padding: 5px; color: white;" class="form-control btn btn-danger">CANCELAR - LIMPIAR</a>
                     </div>
-                    <p>
-                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            VER SUB CATEGORÍAS CREADAS
-                        </a>
-                    </p>
+                    <div class="col-md-4">
+                        <p>
+                            <a class="btn btn-primary form-control" style="padding: 5px;" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                VER SUB CATEGORÍAS CREADAS
+                            </a>
+                        </p>
+                    </div>
                     <div class="collapse" id="collapseExample">
                         <div class="card card-body">
                             <div class="container-fluid bg-gray ">
@@ -64,6 +86,7 @@ if (!$admin || !$mostrador) {
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
+                                                        <th scope="col">N° SUBCATEG.</th>
                                                         <th scope="col">SUB CATEGORÍAS</th>
                                                         <th scope="col">ELIMINAR</th>
                                                     </tr>
@@ -71,14 +94,15 @@ if (!$admin || !$mostrador) {
                                                 <?php
                                                 include('conexion.php');
                                                 $datos = mysqli_query($conexion_bd, "SELECT id, nombre FROM sub_categorias ORDER BY nombre");
-                                                while ($listar_cat = mysqli_fetch_array($datos)) { 
+                                                while ($listar_cat = mysqli_fetch_array($datos)) {
                                                 ?>
-                                                <tbody id="content">
-                                                    <tr>
-                                                    <td><?php echo $listar_cat['nombre'] ?></td>
-                                                    <td><a class="btn btn-danger" href="sub_cat_eliminada.php?id=<?php echo $listar_cat['id'] ?>" >ELIMINAR</td>
-                                                    </tr>
-                                                </tbody>
+                                                    <tbody id="content">
+                                                        <tr>
+                                                            <td><?php echo $listar_cat['id'] ?></td>
+                                                            <td><?php echo $listar_cat['nombre'] ?></td>
+                                                            <td><a class="btn btn-danger" href="sub_cat_eliminada.php?id=<?php echo $listar_cat['id'] ?>">ELIMINAR</td>
+                                                        </tr>
+                                                    </tbody>
                                                 <?php
                                                 }
                                                 ?>
@@ -90,7 +114,7 @@ if (!$admin || !$mostrador) {
 
                         </div>
                     </div>
-                    
+
                 </form>
             </div>
         </div>
@@ -115,7 +139,22 @@ if (!$admin || !$mostrador) {
         unset($_SESSION['sub_categoria']);
     }
     ?>
-     <?php
+    <?php
+    if (isset($_SESSION['no_disponible'])) { ?>
+        <script>
+            swal({
+                title: '<?php echo $_SESSION['no_disponible']; ?>',
+                text: "La sub categoría ingresada \n ya existe!!!",
+                icon: "error",
+                button: "Continue aquí!!",
+
+            });
+        </script>
+    <?php
+        unset($_SESSION['no_disponible']);
+    }
+    ?>
+    <?php
     if (isset($_SESSION['sub_cat_eliminada'])) { ?>
         <script>
             swal({

@@ -29,10 +29,10 @@ if (!$admin || !$mostrador) {
     ?>
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 contenedor_gral bg-light">
+            <div class="col-lg-12 contenedor_gral bg-secondary">
                 <div class="row">
                     <div class="col-md-11 py-4">
-                        <h5>FORMULARIO ALTA DE PROVEEDORES</h5>
+                        <h5 style="color: white;">FORMULARIO ALTA DE PROVEEDORES</h5>
                     </div>
                     <div class="col-md-1">
                         <form action="index.php">
@@ -87,10 +87,10 @@ if (!$admin || !$mostrador) {
                         <input type="text" class="form-control" id="inputAddress" name="movil" placeholder="WhatsApp (543413672066)" required>
                     </div>
                     <div class="col-md-6">
-                        <button type="submit" class=" form-control btn btn-success">GUARDAR</button>
+                        <button type="submit" style="padding: 5px;" class="form-control btn btn-success">GUARDAR</button>
                     </div>
                     <div class="col-md-6">
-                        <a href="" type="submit" class="form-control btn btn-danger">CANCELAR - LIMPIAR</a>
+                        <a href="" type="submit" style="padding: 5px;" class="form-control btn btn-danger">CANCELAR - LIMPIAR</a>
                     </div>
                 </form>
             </div>

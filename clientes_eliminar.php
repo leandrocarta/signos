@@ -21,13 +21,13 @@ session_start();
     <?php
     include("nav.php");
     ?>
-    <div class="container-fluid bg-gray ">
+    <div class="container-fluid bg-secondary ">
         <div class="row">
             <div class="row">
                 <div class="col-md-11 py-4">
-                    <h5>ELIMINAR CLIENTES</h5>
+                    <h5 style="color: white;">ELIMINAR CLIENTES</h5>
                     <form action="" method="POST">
-                        <label for="elimina_cliente">BUSCAR CLIENTE</label>
+                        <label style="color: white;" for="elimina_cliente">BUSCAR CLIENTE</label>
                         <input class="form-control" type="text" name="elimina_cliente" id="elimina_cliente">
                     </form>
 

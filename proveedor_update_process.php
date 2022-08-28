@@ -31,10 +31,10 @@ session_start();
     ?>
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 contenedor_gral bg-light">
+            <div class="col-lg-12 contenedor_gral bg-secondary">
                 <div class="row">
                     <div class="col-md-11 py-4">
-                        <h5>MODIFICAR INFORMACION DEL PROVEEDOR</h5>
+                        <h5 style="color: white;">MODIFICAR INFORMACION DEL PROVEEDOR</h5>
                     </div>
                     <div class="col-md-1">
                         <form action="index.php">

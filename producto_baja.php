@@ -12,18 +12,19 @@
     <script src="https://kit.fontawesome.com/5cd6077bf2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="sass/estilos.css">
 </head>
+
 <body>
     <?php
     include("nav.php");
     ?>
-    <div class="container-fluid bg-secondary">
+    <div class="container-fluid bg-secondary ">
         <div class="row">
             <div class="row">
                 <div class="col-md-11 py-4">
-                    <h5 style="color: white;">CONSULTA DE CLIENTES</h5>
+                    <h5 style="color: white;">CONSULTA DE PRODUCTOS</h5>
                     <form action="search.php" method="POST">
-                        <label style="color: white;" for="campo">BUSCAR CLIENTE</label>
-                        <input class="form-control" type="text" name="campo" id="campo">
+                        <label style="color: white;" for="campo">BUSCAR PRODUCTO</label>
+                        <input class="form-control" type="text" name="campo" id="campo" style="text-transform:uppercase;">
                     </form>
                 </div>
                 <div class="col-md-1">
@@ -37,21 +38,19 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">CLIENTE</th>
-                                <th scope="col">CONTACTO</th>
-                                <th scope="col">CUIT</th>
-                                <th scope="col">DIRECCIÓN </th>
-                                <th scope="col">LOCALIDAD</th>
-                                <th scope="col">TELÉFONO</th>
-                                <th scope="col">WHATSAPP</th>
-                                <th scope="col">EMAIL</th>
-                                <th scope="col">F. ALTA</th>
+                                <th scope="col">COD.INT</th>
+                                <th scope="col">COD.PROV</th>
+                                <th scope="col">PRODUCTO</th>
+                                <th scope="col">NETO</th>
+                                <th scope="col">IVA</th>
+                                <th scope="col">FINAL</th>  
+                                <th scope="col">EDITAR</th>  
+                                <th scope="col">ELIMINAR</th>                               
                             </tr>
-                        </thead>
-                        <tbody id="content">
+                        </thead>                        
+                            <tbody id="content">                                
 
-                        </tbody>
+                            </tbody>                       
                     </table>
                 </div>
             </div>
@@ -64,25 +63,24 @@
         function getData() {
             let input = document.getElementById("campo").value
             let content = document.getElementById("content")
-            let url = "search_cliente.php";
+            let url = "search_productos_elimina.php";
 
             let formaData = new FormData;
             formaData.append('campo', input);
             fetch(url, {
-
                     method: "POST",
                     body: formaData
                 }).then(response => response.json())
                 .then(data => {
                     content.innerHTML = data
-                }).catch(err => console.log(err))   
+                }).catch(err => console.log(err))
         }
-    </script>
+    </script> 
     <script>
         foco();
 
         function foco() {
-           
+
             document.getElementById("campo").focus();
         }
     </script>
@@ -90,6 +88,26 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<?php
+if (isset($_SESSION['producto_eliminado'])) { ?>
+    <script>
+        swal({
+            title: '<?php echo $_SESSION['producto_eliminado']; ?>',
+            text: "El producto se Eliminó correctamente.",
+            icon: "error",
+            button: "Continue aquí!!",
+
+        });
+    </script>
+
+<?php
+    unset($_SESSION['producto_eliminado']);
+}
+
+?>
+
 </body>
 
 </html>

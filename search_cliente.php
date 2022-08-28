@@ -9,22 +9,11 @@ $tabla = "clientes";
 
 $campo = $conexion_bd->real_escape_string($_POST['campo']) ?? null;
 
-$where = '';
-if($campo != null){
-$where = "WHERE (";
-
-$cont = count($columns);
-
-for($i = 0; $i < $cont; $i++){
-    $where .= $columns[$i] . " LIKE'%" . $campo . "%' OR ";
-}
-$where = substr_replace($where, "", -3);
-$where .= ")";
-}
-
-$sql = "SELECT" . " " . implode(", ", $columns) . "
-FROM $tabla
-$where ";
+$sql="SELECT" . " " . implode(", ", $columns) . "
+FROM $tabla WHERE 1";
+foreach(explode(' ',$campo) as $termino)
+    $sql.=" AND nombre LIKE '%".$termino."%'";
+$sql.="LIMIT 1000";
 
 $resultado = $conexion_bd->query($sql);
 $num_rows = $resultado->num_rows;
@@ -34,7 +23,8 @@ if($num_rows > 0){
     while($row = $resultado->fetch_assoc()) {
         $html .= '<tr>';
         $html .= '<td>'.$row['id'].'</td>';
-        $html .= '<td> <input value='.$row['nombre'].'></td>';
+       // $html .= '<td> <input value='.$row['nombre'].'></td>';
+        $html .= '<td>'.$row['nombre'].'</td>';
         $html .= '<td>'.$row['nombre_contacto'].'</td>';
         $html .= '<td>'.$row['cuit'].'</td>';
         $html .= '<td>'.$row['direccion'].'</td>';

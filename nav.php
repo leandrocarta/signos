@@ -48,10 +48,10 @@ if (!$admin || !$mostrador) {
                     <li class="nav-item dropdown" id="myDropdown">
                         <a class="nav-link dropdown-toggle white" href="#" id="focoProductos" data-bs-toggle="dropdown"> PRODUCTOS </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item disabled" href="#">BUSCAR</a></li>
-                            <li><a class="dropdown-item disabled" href="#">ALTAS</a></li>
-                            <li><a class="dropdown-item disabled" href="#">BAJAS</a></li>
-                            <li><a class="dropdown-item disabled" href="#">MODIFICAR</a></li>
+                            <li><a class="dropdown-item" href="productos.php">BUSCAR</a></li>
+                            <li><a class="dropdown-item" href="alta_prod.php">ALTAS</a></li>
+                            <li><a class="dropdown-item" href="producto_baja.php">EDITAR / BORRAR</a></li>
+                            
                             <li> <a class="dropdown-item" href="#"> CATEGORÍAS &raquo; </a>
                                 <ul class="submenu dropdown-menu">
                                     <li><a class="dropdown-item" href="alta_categorias.php">CREAR CATEGORÍAS</a></li>
@@ -64,7 +64,7 @@ if (!$admin || !$mostrador) {
                     <li class="nav-item dropdown" id="myDropdown">
                         <a class="nav-link dropdown-toggle white" id="focoPrecio" href="#" data-bs-toggle="dropdown"> PRECIOS </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item disabled" href="#">MODIFICAR</a></li>
+                            <li><a class="dropdown-item" href="cp_filtros.php">MODIFICAR</a></li>
                         </ul>
                     </li>
 

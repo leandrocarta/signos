@@ -12,6 +12,7 @@
     <script src="https://kit.fontawesome.com/5cd6077bf2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="sass/estilos.css">
 </head>
+
 <body>
     <?php
     include("nav.php");
@@ -20,10 +21,20 @@
         <div class="row">
             <div class="row">
                 <div class="col-md-11 py-4">
-                    <h5 style="color: white;">CONSULTA DE PROVEEDORES</h5>
-                    <form action="search.php" method="POST">
-                        <label style="color: white;" for="campo">BUSCAR PROVEEDOR</label>
-                        <input class="form-control" type="text" name="campo" id="campo">
+                    <h5 style="color: white;">CONSULTA DE PRODUCTOS</h5>
+                    <form action="search.php" method="POST" class="d-flex ">
+                        <div class="col-md-4 mx-2">
+                            <label style="color: white;" for="campo">NOMBRE PRODUCTO</label>
+                            <input class="form-control" type="text" name="campo" id="campo" style="text-transform:uppercase;">
+                        </div>
+                        <div class="col-md-4">
+                            <label style="color: white;" for="cod_int">CÓDIGO INTERNO </label>
+                            <input type="text" class="form-control" name="cod_int" id="cod_int" style="text-transform:uppercase;">
+                        </div>
+                        <div class="col-md-4 mx-2">
+                            <label style="color: white;" for="cod_prov">CÓDIGO PROV.</label>
+                            <input type="text" class="form-control" name="cod_prov" id="cod_prov" style="text-transform:uppercase;">
+                        </div>
                     </form>
                 </div>
                 <div class="col-md-1">
@@ -37,17 +48,12 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">PROVEEDOR</th>
-                                <th scope="col">VENDEDOR</th>
-                                <th scope="col">CUIT</th>
-                                <th scope="col">DIRECCIÓN </th>
-                                <th scope="col">LOCALIDAD</th>
-                                <th scope="col">TELÉFONO</th>
-                                <th scope="col">WHATSAPP</th>
-                                <th scope="col">EMAIL</th>
-                                <th scope="col">F. ALTA</th>
-
+                                <th scope="col">COD.INT</th>
+                                <th scope="col">COD.PROV</th>
+                                <th scope="col">PRODUCTO</th>
+                                <th scope="col">NETO</th>
+                                <th scope="col">IVA</th>
+                                <th scope="col">FINAL</th>
                             </tr>
                         </thead>
                         <tbody id="content">
@@ -65,18 +71,17 @@
         function getData() {
             let input = document.getElementById("campo").value
             let content = document.getElementById("content")
-            let url = "search_proveedor.php";
+            let url = "search_productos.php";
 
             let formaData = new FormData;
             formaData.append('campo', input);
             fetch(url, {
-
                     method: "POST",
                     body: formaData
                 }).then(response => response.json())
                 .then(data => {
                     content.innerHTML = data
-                }).catch(err => console.log(err))   
+                }).catch(err => console.log(err))
         }
     </script>
     <script>
@@ -85,6 +90,46 @@
         function foco() {
 
             document.getElementById("campo").focus();
+        }
+    </script>
+    <script>
+        getDataCodInt()
+        document.getElementById("cod_int").addEventListener("keyup", getDataCodInt)
+
+        function getDataCodInt() {
+            let input = document.getElementById("cod_int").value
+            let content = document.getElementById("content")
+            let url = "search_cod_int.php";
+
+            let formaData = new FormData;
+            formaData.append('cod_int', input);
+            fetch(url, {
+                    method: "POST",
+                    body: formaData
+                }).then(response => response.json())
+                .then(data => {
+                    content.innerHTML = data
+                }).catch(err => console.log(err))
+        }
+    </script>
+     <script>
+        getDataCodProv()
+        document.getElementById("cod_prov").addEventListener("keyup", getDataCodProv)
+
+        function getDataCodProv() {
+            let input = document.getElementById("cod_prov").value
+            let content = document.getElementById("content")
+            let url = "search_cod_prov.php";
+
+            let formaData = new FormData;
+            formaData.append('cod_prov', input);
+            fetch(url, {
+                    method: "POST",
+                    body: formaData
+                }).then(response => response.json())
+                .then(data => {
+                    content.innerHTML = data
+                }).catch(err => console.log(err))
         }
     </script>
     <!-- Bootstrap JavaScript Libraries -->
