@@ -6,9 +6,8 @@ if (!$admin || !$mostrador) {
     header("Location: login.php");
 }
 ?>
-
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <title>Ferretería Signos</title>
@@ -27,9 +26,9 @@ if (!$admin || !$mostrador) {
     include("nav.php");
     include('conexion.php');
     ?>
-    <div class="container-fluid  bg-success">
+    <div class="container-fluid bg-success">
         <div class="row">
-            <div class="col lg-12">
+            <div class="col-lg-6 mb-3">
                 <div class="row">
                     <div class="col-md-11 pt-3 text-center">
                         <h5 class="border rounded-2 p-2" style="color: white;">MODIFICACIONES DE PRECIOS</h5>
@@ -40,10 +39,6 @@ if (!$admin || !$mostrador) {
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 mb-3">
                 <div class="row">
                     <h5 class="text-center" style="color: white;">FILTROS DE BUSQUEDA</h5>
                     <div class="col-lg-6 ">
@@ -154,240 +149,307 @@ if (!$admin || !$mostrador) {
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="table-wrapper-cp">
-                    <table class="table table-striped">
-                        <thead class="white">
-                            <tr>
-                                <th scope="col">CODIDO</th>
-                                <th scope="col">PRODUCTO</th>
-                                <th scope="col">$ NETO</th>
-                                <th scope="col">IVA</th>
-                                <th scope="col">$ FINAL</th>
-                                <th scope="col">ELIMINAR</th>
-                            </tr>
-                        </thead>
-                        <?php
-                        include('conexion.php');
-                        
-                        if ($_SESSION['muestra']) {
-                            
-                           unset($_SESSION['muestra']);
-
-                            $muestra = mysqli_query($conexion_bd, "SELECT cod_interno, producto, neto_mostrador, iva, precio_final
-                            FROM update_precios");
-                            while ($listar_datos = mysqli_fetch_array($muestra)) {
-                                $cod_interno = $listar_datos['cod_interno'];
-                                $producto = $listar_datos['producto'];
-                                $neto_mostrador = $listar_datos['neto_mostrador'];
-                                $iva = $listar_datos['iva'];
-                                $precio_final = $listar_datos['precio_final'];
-                        ?>
-                                <tbody id="content" class="white">
+            <div class="col-lg-6 ps-4 pt-2">
+                <div class="row">
+                    <div class="col-lg-12 border">
+                        <div class="table-wrapper-cp">
+                            <table class="table table-striped">
+                                <thead class="white">
                                     <tr>
-                                        <td><?php echo $cod_interno; ?></td>
-                                        <td><?php echo $producto; ?></td>
-                                        <td><?php echo $neto_mostrador; ?></td>
-                                        <td><?php echo $iva; ?></td>
-                                        <td><?php echo $precio_final; ?></td>
-                                        <td><a href="elimina_prod.php?id=<?php echo $cod_interno ?>" style="color:white;" class="btn btn-danger">X</a></td>
+                                        <th scope="col">CODIDO</th>
+                                        <th scope="col">PRODUCTO</th>
+                                        <th scope="col">NETO</th>
+                                        <th scope="col">IVA</th>
+                                        <th scope="col">FINAL</th>
+                                        <th scope="col">ELIMINAR</th>
                                     </tr>
-                                </tbody>
-                            <?php
-                            }
-                            
-                        }
-                        if ($_POST['busqueda_estricta']) {
-                            mysqli_query($conexion_bd, "DELETE FROM update_precios");
-                            $termino = $_POST['busqueda_estricta'];
-
-                            $consulta = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final
-                         FROM productos2 WHERE producto LIKE '%" . $termino  . "%' LIMIT 2000");
-                            if ($consulta) {
-                                while ($listar_datos = mysqli_fetch_array($consulta)) {
-                                    $cod_interno = $listar_datos['id'];
-                                    $producto = $listar_datos['producto'];
-                                    $neto_mostrador = $listar_datos['neto_mostrador'];
-                                    $iva = $listar_datos['iva'];
-                                    $precio_final = $listar_datos['precio_final'];
-
-                                    mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES('$cod_interno',
-                                '$producto', '$neto_mostrador', '$iva', '$precio_final')");
-                                }
-                            }
-                            ?>
-                            <?php
-                            $muestra = mysqli_query($conexion_bd, "SELECT cod_interno, producto, neto_mostrador, iva, precio_final
-                            FROM update_precios");
-                            if ($muestra) {
-                                while ($listar_datos = mysqli_fetch_array($muestra)) {
-                                    $cod_interno = $listar_datos['cod_interno'];
-                                    $producto = $listar_datos['producto'];
-                                    $neto_mostrador = $listar_datos['neto_mostrador'];
-                                    $iva = $listar_datos['iva'];
-                                    $precio_final = $listar_datos['precio_final'];
-
-                            ?>
-                                    <tbody id="content" class="white">
-                                        <tr>
-                                            <td><?php echo $cod_interno; ?></td>
-                                            <td><?php echo $producto; ?></td>
-                                            <td><?php echo $neto_mostrador; ?></td>
-                                            <td><?php echo $iva; ?></td>
-                                            <td><?php echo $precio_final; ?></td>
-                                            <td><a href="elimina_prod.php?id=<?php echo $cod_interno ?>" style="color:white;" class="btn btn-danger">X</a></td>
-                                        </tr>
-                                    </tbody>
+                                </thead>
                                 <?php
-                                }
-                            } else {
-                                ?>
-                                <tbody id="content">
-                                    <td colspan="10">La búsqueda no tuvo resultados</td>
-                                </tbody>
+                                include('conexion.php');
 
-                            <?php
-                            }
-                        }
-                        if (($_POST['codigo_inicial']) && ($_POST['codigo_final'])) {
-                            mysqli_query($conexion_bd, "DELETE FROM update_precios");
-                            $desdeCod = $_POST['codigo_inicial'];
-                            $hastaCod = $_POST['codigo_final'];
-                            $consulta = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final 
-                            FROM productos2 WHERE id >= '$desdeCod' AND id <= $hastaCod");
+                                if ($_SESSION['muestra']) {
 
-                            if ($consulta) {
-                                while ($listar_datos = mysqli_fetch_array($consulta)) {
-                                    $cod_interno = $listar_datos['id'];
-                                    $producto = $listar_datos['producto'];
-                                    $neto_mostrador = $listar_datos['neto_mostrador'];
-                                    $iva = $listar_datos['iva'];
-                                    $precio_final = $listar_datos['precio_final'];
+                                    unset($_SESSION['muestra']);
 
-                                    mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES('$cod_interno',
-                                    '$producto', '$neto_mostrador', '$iva', '$precio_final')");
-                                }
-                            }
-                            ?>
-                            <?php
-                            $muestra = mysqli_query($conexion_bd, "SELECT cod_interno, producto, neto_mostrador, iva, precio_final
+                                    $muestra = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final
                             FROM update_precios");
-                            if ($muestra) {
-                                while ($listar_datos = mysqli_fetch_array($muestra)) {
-                                    $cod_interno = $listar_datos['cod_interno'];
-                                    $producto = $listar_datos['producto'];
-                                    $neto_mostrador = $listar_datos['neto_mostrador'];
-                                    $iva = $listar_datos['iva'];
-                                    $precio_final = $listar_datos['precio_final'];
-
-                            ?>
-                                    <tbody id="content" class="white">
-                                        <tr>
-                                            <td><?php echo $cod_interno; ?></td>
-                                            <td><?php echo $producto; ?></td>
-                                            <td><?php echo $neto_mostrador; ?></td>
-                                            <td><?php echo $iva; ?></td>
-                                            <td><?php echo $precio_final; ?></td>
-                                            <td><a href="elimina_prod.php?id=<?php echo $cod_interno ?>" style="color:white;" class="btn btn-danger">X</a></td>
-                                        </tr>
-                                    </tbody>
-                                <?php
-                                }
-                            } else {
+                                    while ($listar_datos = mysqli_fetch_array($muestra)) {
+                                        $cod_interno = $listar_datos['id'];
+                                        $producto = $listar_datos['producto'];
+                                        $neto_mostrador = $listar_datos['neto_mostrador'];
+                                        $iva = $listar_datos['iva'];
+                                        $precio_final = $listar_datos['precio_final'];
                                 ?>
-                                <tbody id="content">
-                                    <td colspan="10">La búsqueda no tuvo resultados</td>
-                                </tbody>
+                                        <tbody id="content" class="white">
+                                            <tr>
+                                                <td><?php echo $cod_interno; ?></td>
+                                                <td><?php echo $producto; ?></td>
+                                                <td><?php echo $neto_mostrador; ?></td>
+                                                <td><?php echo $iva; ?></td>
+                                                <td><?php echo $precio_final; ?></td>
+                                                <td><a href="elimina_prod.php?id=<?php echo $cod_interno ?>" style="color:white;" class="btn btn-danger">X</a></td>
+                                            </tr>
+                                        </tbody>
+                                    <?php
+                                    }
+                                }
 
-                            <?php
-                            }
-                        }
+                                if ($_POST['busqueda_estricta']) {
+                                    mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                    $termino = $_POST['busqueda_estricta'];
+                                    $consulta = mysqli_query($conexion_bd, "SELECT id, cod_proveedor, id_cat, id_subCat, id_proveedor, producto, neto_mostrador, iva, precio_final,
+                                    moneda, cotizacion, costo, dscto, dscto2, dscto3, utilidad FROM productos WHERE producto LIKE '%" . $termino  . "%' LIMIT 2000");
+                                    if ($consulta) {
+                                        while ($listar_datos = mysqli_fetch_array($consulta)) {
+                                            $cod_interno = $listar_datos['id'];
+                                            $cod_proveedor = $listar_datos['cod_proveedor'];
+                                            $id_cat = $listar_datos['id_cat'];
+                                            $id_subCat = $listar_datos['id_subCat'];
+                                            $id_proveedor = $listar_datos['id_proveedor'];
+                                            $producto = $listar_datos['producto'];
+                                            $neto_mostrador = $listar_datos['neto_mostrador'];
+                                            $iva = $listar_datos['iva'];
+                                            $precio_final = $listar_datos['precio_final'];
+                                            $moneda = $listar_datos['moneda'];
+                                            $cotizacion = $listar_datos['cotizacion'];
+                                            $costo = $listar_datos['costo'];
+                                            $dscto = $listar_datos['dscto'];
+                                            $dscto2 = $listar_datos['dscto2'];
+                                            $dscto3 = $listar_datos['dscto3'];
+                                            $utilidad = $listar_datos['utilidad'];
 
-                        if (($_POST['proveedor']) && (!$_POST['categoria']) && (!$_POST['sub_categoria'])) {
-                            mysqli_query($conexion_bd, "DELETE FROM update_precios");
-                            $proveedor = $_POST['proveedor'];
-                            $categoria = $_POST['categoria'];
-                            $sub_categoria = $_POST['sub_categoria'];
-                            $consulta = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final 
-                            FROM productos2 WHERE id_proveedor = '$proveedor'");
-                            while ($listar_datos = mysqli_fetch_array($consulta)) {
-                                $cod_interno = $listar_datos['id'];
-                                $producto = $listar_datos['producto'];
-                                $neto_mostrador = $listar_datos['neto_mostrador'];
-                                $iva = $listar_datos['iva'];
-                                $precio_final = $listar_datos['precio_final'];
-                                mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES('$cod_interno',
+                                            mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES ('$cod_interno', '$cod_proveedor', '$id_cat', '$id_subCat', '$id_proveedor', '$producto', 
+                                            '$neto_mostrador', '$iva', '$precio_final', '$moneda', '$cotizacion', '$costo', '$dscto', '$dscto2', '$dscto3', '$utilidad')");
+                                        }
+                                    }
+                                    ?>
+                                    <?php
+                                    $muestra = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final
+                                    FROM update_precios");
+                                    if ($muestra) {
+                                        while ($listar_datos = mysqli_fetch_array($muestra)) {
+                                            $id = $listar_datos['id'];
+                                            $producto = $listar_datos['producto'];
+                                            $neto_mostrador = $listar_datos['neto_mostrador'];
+                                            $iva = $listar_datos['iva'];
+                                            $precio_final = $listar_datos['precio_final'];
+
+                                    ?>
+                                            <tbody id="content" class="white">
+                                                <tr>
+                                                    <td><?php echo $id; ?></td>
+                                                    <td><?php echo $producto; ?></td>
+                                                    <td><?php echo $neto_mostrador; ?></td>
+                                                    <td><?php echo $iva; ?></td>
+                                                    <td><?php echo $precio_final; ?></td>
+                                                    <td><a href="elimina_prod.php?id=<?php echo $id ?>" style="color:white;" class="btn btn-danger">X</a></td>
+                                                </tr>
+                                            </tbody>
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <tbody id="content">
+                                            <td colspan="10">La búsqueda no tuvo resultados</td>
+                                        </tbody>
+
+                                    <?php
+                                    }
+                                }
+                                if (($_POST['codigo_inicial']) && ($_POST['codigo_final'])) {
+                                    mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                    $desdeCod = $_POST['codigo_inicial'];
+                                    $hastaCod = $_POST['codigo_final'];
+                                    $consulta = mysqli_query($conexion_bd, "SELECT id, cod_proveedor, id_cat, id_subCat, id_proveedor, producto, neto_mostrador, iva, precio_final,
+                                    moneda, cotizacion, costo, dscto, dscto2, dscto3, utilidad FROM productos WHERE id >= '$desdeCod' AND id <= $hastaCod");
+                                    if ($consulta) {
+                                        while ($listar_datos = mysqli_fetch_array($consulta)) {
+                                            $cod_interno = $listar_datos['id'];
+                                            $cod_proveedor = $listar_datos['cod_proveedor'];
+                                            $id_cat = $listar_datos['id_cat'];
+                                            $id_subCat = $listar_datos['id_subCat'];
+                                            $id_proveedor = $listar_datos['id_proveedor'];
+                                            $producto = $listar_datos['producto'];
+                                            $neto_mostrador = $listar_datos['neto_mostrador'];
+                                            $iva = $listar_datos['iva'];
+                                            $precio_final = $listar_datos['precio_final'];
+                                            $moneda = $listar_datos['moneda'];
+                                            $cotizacion = $listar_datos['cotizacion'];
+                                            $costo = $listar_datos['costo'];
+                                            $dscto = $listar_datos['dscto'];
+                                            $dscto2 = $listar_datos['dscto2'];
+                                            $dscto3 = $listar_datos['dscto3'];
+                                            $utilidad = $listar_datos['utilidad'];
+
+
+                                            mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES ('$cod_interno', '$cod_proveedor', '$id_cat', '$id_subCat', '$id_proveedor', '$producto', 
+                                            '$neto_mostrador', '$iva', '$precio_final', '$moneda', '$cotizacion', '$costo', '$dscto', '$dscto2', '$dscto3', '$utilidad')");
+                                        }
+                                    }
+                                    ?>
+                                    <?php
+                                    $muestra = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final
+                            FROM update_precios");
+                                    if ($muestra) {
+                                        while ($listar_datos = mysqli_fetch_array($muestra)) {
+                                            $id = $listar_datos['id'];
+                                            $producto = $listar_datos['producto'];
+                                            $neto_mostrador = $listar_datos['neto_mostrador'];
+                                            $iva = $listar_datos['iva'];
+                                            $precio_final = $listar_datos['precio_final'];
+
+                                    ?>
+                                            <tbody id="content" class="white">
+                                                <tr>
+                                                    <td><?php echo $id; ?></td>
+                                                    <td><?php echo $producto; ?></td>
+                                                    <td><?php echo $neto_mostrador; ?></td>
+                                                    <td><?php echo $iva; ?></td>
+                                                    <td><?php echo $precio_final; ?></td>
+                                                    <td><a href="elimina_prod.php?id=<?php echo $id ?>" style="color:white;" class="btn btn-danger">X</a></td>
+                                                </tr>
+                                            </tbody>
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <tbody id="content">
+                                            <td colspan="10">La búsqueda no tuvo resultados</td>
+                                        </tbody>
+
+                                    <?php
+                                    }
+                                }
+
+                                if (($_POST['proveedor']) && (!$_POST['categoria']) && (!$_POST['sub_categoria'])) {
+                                    mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                    $proveedor = $_POST['proveedor'];
+                                    $categoria = $_POST['categoria'];
+                                    $sub_categoria = $_POST['sub_categoria'];
+                                    $consulta = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final 
+                            FROM productos WHERE id_proveedor = '$proveedor'");
+                                    while ($listar_datos = mysqli_fetch_array($consulta)) {
+                                        $cod_interno = $listar_datos['id'];
+                                        $producto = $listar_datos['producto'];
+                                        $neto_mostrador = $listar_datos['neto_mostrador'];
+                                        $iva = $listar_datos['iva'];
+                                        $precio_final = $listar_datos['precio_final'];
+                                        mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES('$cod_interno',
                                 '$producto', '$neto_mostrador', '$iva', '$precio_final')");
-                            ?>
-                                <tbody id="content" class="white">
-                                    <tr>
-                                        <td><?php echo $cod_interno; ?></td>
-                                        <td><?php echo $producto; ?></td>
-                                        <td><?php echo $neto_mostrador; ?></td>
-                                        <td><?php echo $iva; ?></td>
-                                        <td><?php echo $precio_final; ?></td>
-                                    </tr>
-                                </tbody>
-                            <?php
-                            }
-                        } else if (($_POST['proveedor']) && ($_POST['categoria'])) {
-                            mysqli_query($conexion_bd, "DELETE FROM update_precios");
-                            $proveedor = $_POST['proveedor'];
-                            $categoria = $_POST['categoria'];
+                                    ?>
+                                        <tbody id="content" class="white">
+                                            <tr>
+                                                <td><?php echo $cod_interno; ?></td>
+                                                <td><?php echo $producto; ?></td>
+                                                <td><?php echo $neto_mostrador; ?></td>
+                                                <td><?php echo $iva; ?></td>
+                                                <td><?php echo $precio_final; ?></td>
+                                            </tr>
+                                        </tbody>
+                                    <?php
+                                    }
+                                } else if (($_POST['proveedor']) && ($_POST['categoria'])) {
+                                    mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                    $proveedor = $_POST['proveedor'];
+                                    $categoria = $_POST['categoria'];
 
-                            $consulta = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final 
-                            FROM productos2 WHERE id_proveedor = '$proveedor' AND id_cat = '$categoria'");
+                                    $consulta = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final 
+                            FROM productos WHERE id_proveedor = '$proveedor' AND id_cat = '$categoria'");
 
-                            while ($listar_datos = mysqli_fetch_array($consulta)) {
-                                $cod_interno = $listar_datos['id'];
-                                $producto = $listar_datos['producto'];
-                                $neto_mostrador = $listar_datos['neto_mostrador'];
-                                $iva = $listar_datos['iva'];
-                                $precio_final = $listar_datos['precio_final'];
-                                mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES('$cod_interno',
+                                    while ($listar_datos = mysqli_fetch_array($consulta)) {
+                                        $cod_interno = $listar_datos['id'];
+                                        $producto = $listar_datos['producto'];
+                                        $neto_mostrador = $listar_datos['neto_mostrador'];
+                                        $iva = $listar_datos['iva'];
+                                        $precio_final = $listar_datos['precio_final'];
+                                        mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES('$cod_interno',
                                 '$producto', '$neto_mostrador', '$iva', '$precio_final')");
-                            ?>
-                                <tbody id="content" class="white">
-                                    <tr>
-                                        <td><?php echo $cod_interno; ?></td>
-                                        <td><?php echo $producto; ?></td>
-                                        <td><?php echo $neto_mostrador; ?></td>
-                                        <td><?php echo $iva; ?></td>
-                                        <td><?php echo $precio_final; ?></td>
-                                    </tr>
-                                </tbody>
-                            <?php
-                            }
-                        } else if (($_POST['proveedor']) && ($_POST['categoria']) && ($_POST['sub_categoria'])) {
-                            mysqli_query($conexion_bd, "DELETE FROM update_precios");
-                            $proveedor = $_POST['proveedor'];
-                            $categoria = $_POST['categoria'];
-                            $sub_categoria = $_POST['sub_categoria'];
-                            $consulta = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final 
-                            FROM productos2 WHERE id_proveedor = '$proveedor' AND id_cat = '$categoria' AND id_subCat = '$categoria'");
-                            while ($listar_datos = mysqli_fetch_array($consulta)) {
-                                $cod_interno = $listar_datos['id'];
-                                $producto = $listar_datos['producto'];
-                                $neto_mostrador = $listar_datos['neto_mostrador'];
-                                $iva = $listar_datos['iva'];
-                                $precio_final = $listar_datos['precio_final'];
-                                mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES('$cod_interno',
+                                    ?>
+                                        <tbody id="content" class="white">
+                                            <tr>
+                                                <td><?php echo $cod_interno; ?></td>
+                                                <td><?php echo $producto; ?></td>
+                                                <td><?php echo $neto_mostrador; ?></td>
+                                                <td><?php echo $iva; ?></td>
+                                                <td><?php echo $precio_final; ?></td>
+                                            </tr>
+                                        </tbody>
+                                    <?php
+                                    }
+                                } else if (($_POST['proveedor']) && ($_POST['categoria']) && ($_POST['sub_categoria'])) {
+                                    mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                    $proveedor = $_POST['proveedor'];
+                                    $categoria = $_POST['categoria'];
+                                    $sub_categoria = $_POST['sub_categoria'];
+                                    $consulta = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final 
+                            FROM productos WHERE id_proveedor = '$proveedor' AND id_cat = '$categoria' AND id_subCat = '$categoria'");
+                                    while ($listar_datos = mysqli_fetch_array($consulta)) {
+                                        $cod_interno = $listar_datos['id'];
+                                        $producto = $listar_datos['producto'];
+                                        $neto_mostrador = $listar_datos['neto_mostrador'];
+                                        $iva = $listar_datos['iva'];
+                                        $precio_final = $listar_datos['precio_final'];
+                                        mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES('$cod_interno',
                                 '$producto', '$neto_mostrador', '$iva', '$precio_final')");
-                            ?>
-                                <tbody id="content" class="white">
-                                    <tr>
-                                        <td><?php echo $cod_interno; ?></td>
-                                        <td><?php echo $producto; ?></td>
-                                        <td><?php echo $neto_mostrador; ?></td>
-                                        <td><?php echo $iva; ?></td>
-                                        <td><?php echo $precio_final; ?></td>
-                                    </tr>
-                                </tbody>
-                        <?php
-                            }
-                        }
-                        ?>
-                    </table>
+                                    ?>
+                                        <tbody id="content" class="white">
+                                            <tr>
+                                                <td><?php echo $cod_interno; ?></td>
+                                                <td><?php echo $producto; ?></td>
+                                                <td><?php echo $neto_mostrador; ?></td>
+                                                <td><?php echo $iva; ?></td>
+                                                <td><?php echo $precio_final; ?></td>
+                                            </tr>
+                                        </tbody>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 border mt-4 p-2">
+                        <div style="color: white;" class="form-text">Cotización moneda por proveedor</div>
+                        <form action="variacion_precios_moneda.php" method="POST" class="row g-3">
+                            <div class="col-auto">
+                                <?php
+                                $proveedor = mysqli_query($conexion_bd, "SELECT id, nombre 
+                                FROM proveedores");
+                                ?>
+                                <select class="form-select" name="proveedor">
+                                    <option>Seleccione un proveedor</option>
+                                    <?php
+                                    while ($listar_proveedor = mysqli_fetch_array($proveedor)) {
+                                        $id_prov = $listar_proveedor['id'];
+                                        $nombre = $listar_proveedor['nombre']; ?>
+                                        <option value="<?php
+                                                        echo $id_prov
+                                                        ?>"><?php
+                                                            echo $nombre
+                                                            ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="col-auto">
+                                <input type="number" class="form-control w-75" step=".001" name="n_cotizacion" placeholder="Cotización" required>
+                            </div>
+                            <div class="col-auto">
+                                <select class="form-select" name="moneda">
+                                    <option value="u$s">u$s</option>
+                                    <option value="€">€</option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary mb-3 p-2">Cambiar cotización</button>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
             </div>
 

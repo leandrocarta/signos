@@ -22,9 +22,19 @@
             <div class="row">
                 <div class="col-md-11 py-4">
                     <h5 style="color: white;">CONSULTA DE PRODUCTOS</h5>
-                    <form action="search.php" method="POST">
-                        <label style="color: white;" for="campo">BUSCAR PRODUCTO</label>
-                        <input class="form-control" type="text" name="campo" id="campo" style="text-transform:uppercase;">
+                    <form action="search.php" method="POST" class="d-flex ">
+                        <div class="col-md-4 mx-2">
+                            <label style="color: white;" for="campo">NOMBRE PRODUCTO</label>
+                            <input class="form-control" type="text" name="campo" id="campo" style="text-transform:uppercase;">
+                        </div>
+                        <div class="col-md-4">
+                            <label style="color: white;" for="cod_int">CÓDIGO INTERNO </label>
+                            <input type="text" class="form-control" name="cod_int" id="cod_int" style="text-transform:uppercase;">
+                        </div>
+                        <div class="col-md-4 mx-2">
+                            <label style="color: white;" for="cod_prov">CÓDIGO PROV.</label>
+                            <input type="text" class="form-control" name="cod_prov" id="cod_prov" style="text-transform:uppercase;">
+                        </div>
                     </form>
                 </div>
                 <div class="col-md-1">
@@ -82,6 +92,46 @@
         function foco() {
 
             document.getElementById("campo").focus();
+        }
+    </script>
+     <script>
+        getDataCodInt()
+        document.getElementById("cod_int").addEventListener("keyup", getDataCodInt)
+
+        function getDataCodInt() {
+            let input = document.getElementById("cod_int").value
+            let content = document.getElementById("content")
+            let url = "search_cod_int_abm.php";
+
+            let formaData = new FormData;
+            formaData.append('cod_int', input);
+            fetch(url, {
+                    method: "POST",
+                    body: formaData
+                }).then(response => response.json())
+                .then(data => {
+                    content.innerHTML = data
+                }).catch(err => console.log(err))
+        }
+    </script>
+    <script>
+        getDataCodProv()
+        document.getElementById("cod_prov").addEventListener("keyup", getDataCodProv)
+
+        function getDataCodProv() {
+            let input = document.getElementById("cod_prov").value
+            let content = document.getElementById("content")
+            let url = "search_cod_prov_abm.php";
+
+            let formaData = new FormData;
+            formaData.append('cod_prov', input);
+            fetch(url, {
+                    method: "POST",
+                    body: formaData
+                }).then(response => response.json())
+                .then(data => {
+                    content.innerHTML = data
+                }).catch(err => console.log(err))
         }
     </script>
     <!-- Bootstrap JavaScript Libraries -->

@@ -50,8 +50,8 @@ if (!$admin || !$mostrador) {
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="productos.php">BUSCAR</a></li>
                             <li><a class="dropdown-item" href="alta_prod.php">ALTAS</a></li>
-                            <li><a class="dropdown-item" href="producto_baja.php">EDITAR / BORRAR</a></li>
-                            
+                            <li><a class="dropdown-item" href="producto_baja.php">EDITAR / BORRAR</a></li> 
+                            <li><a class="dropdown-item" href="recepcion.php">RECEPCIÓN</a></li>
                             <li> <a class="dropdown-item" href="#"> CATEGORÍAS &raquo; </a>
                                 <ul class="submenu dropdown-menu">
                                     <li><a class="dropdown-item" href="alta_categorias.php">CREAR CATEGORÍAS</a></li>

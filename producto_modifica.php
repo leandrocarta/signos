@@ -134,9 +134,9 @@ session_start();
                             <label for="moneda">MONEDA</label>
                             <select class="form-select" name="moneda">
                                 <option value="<?php echo $listar_prod['moneda']; ?>"><?php echo $listar_prod['moneda']; ?></option>
-                                <option value="dolar">u$s</option>
-                                <option value="euro">€</option>
-                                <option value="peso">$</option>
+                                <option value="u$s">u$s</option>
+                                <option value="€">€</option>
+                                <option value="$">$</option>
                             </select>
                         </div>
                         <div class="col-md-4">

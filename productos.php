@@ -112,7 +112,7 @@
                 }).catch(err => console.log(err))
         }
     </script>
-     <script>
+    <script>
         getDataCodProv()
         document.getElementById("cod_prov").addEventListener("keyup", getDataCodProv)
 

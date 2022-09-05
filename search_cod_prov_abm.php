@@ -25,7 +25,9 @@ if ($num_rows > 0) {
         $html .= '<td>' . $row['producto'] . '</td>';
         $html .= '<td>' . $row['neto_mostrador'] . '</td>';
         $html .= '<td>' . $row['iva'] . '</td>';
-        $html .= '<td>' . $row['precio_final'] . '</td>';         
+        $html .= '<td>' . $row['precio_final'] . '</td>';    
+        $html .= '<td><a href="producto_modifica.php?id='. $row['id'].'" style="color:white;" class="btn btn-warning" >EDITA</a></td>';
+        $html .= '<td><a href="producto_eliminado.php?id='. $row['id'].'" style="color:white;" class="btn btn-danger" >ELIMINA</a></td>';             
         $html .= '</tr>';
     }
 } else {

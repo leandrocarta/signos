@@ -15,6 +15,7 @@ $precio = $_POST['precio'];
 $iva = $_POST['iva'];
 $id = $_POST['id'];
 
+/*
 echo "nombre_prod " . $nombre_prod . "<br>"
   . " cod_prov " . $cod_prov . "<br>" .
   " nombre_prov " . $nombre_prov . "<br>" .
@@ -23,7 +24,7 @@ echo "nombre_prod " . $nombre_prod . "<br>"
   " moneda " . $moneda . "<br>" .
   "precio " . $precio . "<br>" .
   " iva " . $iva . "<br>" .
-  " id " . $id;
+  " id " . $id;*/
 
 $p_f = $precio * $iva / 100;
 $p_final = $p_f + $precio;
