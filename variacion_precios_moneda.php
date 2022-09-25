@@ -6,10 +6,10 @@ $id_prov = $_POST['proveedor'];
 $moneda = $_POST['moneda'];
 
 if ($cot) {
-echo "entre por cotizacion " . "<br>";
+
+$cot;
     if($cot){
-        echo "entre por cot" . "<br>";
-        echo "id Prov" . $id_prov . "<br>";
+        
         mysqli_query($conexion_bd, "UPDATE productos SET cotizacion = '$cot'
         WHERE id_proveedor= '$id_prov' AND moneda = '$moneda'");
          mysqli_query($conexion_bd, "UPDATE update_precios SET cotizacion = '$cot'
@@ -33,29 +33,28 @@ echo "entre por cotizacion " . "<br>";
             $dscto3 = $listar_datos['dscto3'];
             $utilidad = $listar_datos['utilidad'];
             $cotizacion = $listar_datos['cotizacion'];
-
             $cal_inc = $costo * $inc / 100;
             $costo_inc = $costo + $cal_inc;
-            echo "Costo inicial " . $costo . "<br>".
-            "Costo con incremento del 10% " . $costo_inc . "<br>";
+          /*  echo "Costo inicial " . $costo . "<br>".
+            "Costo con incremento del 10% " . $costo_inc . "<br>";*/
 
             $primer_descto = $costo_inc * $dscto / 100;
-            echo "Primer descto 10% de 334.4 : " . $primer_descto . "<br>";
+          //  echo "Primer descto 10% de 334.4 : " . $primer_descto . "<br>";
             $nuevo_costo3 = $costo_inc - $primer_descto;
-            echo "Costo con descto : " . $nuevo_costo3 . "<br>";
+          //  echo "Costo con descto : " . $nuevo_costo3 . "<br>";
 
             $segundo_descto = $nuevo_costo3 * $dscto2 / 100;
-            echo "2 descto 0% de 300.96 : " . $segundo_descto . "<br>";
+         //   echo "2 descto 0% de 300.96 : " . $segundo_descto . "<br>";
             $nuevo_costo2 = $nuevo_costo3 - $segundo_descto;
-            echo "Costo con 2 descto : " . $nuevo_costo2 . "<br>";
+          //  echo "Costo con 2 descto : " . $nuevo_costo2 . "<br>";
 
             $tercer_descto = $nuevo_costo2 * $dscto3 / 100;
-            echo "3 descto 0% de 300.96 : " . $tercer_descto . "<br>";
+          //  echo "3 descto 0% de 300.96 : " . $tercer_descto . "<br>";
             $nuevo_cost = $nuevo_costo2 - $tercer_descto;
-            echo "Costo con 3 descto : " . $nuevo_cost . "<br>";
+          //  echo "Costo con 3 descto : " . $nuevo_cost . "<br>";
             $nuevo_costo = $nuevo_cost * $cotizacion;
-            echo "La cotizacion del dolar es : " . $cotizacion . "<br>";
-            echo "Costo * cotizacion dolar : " . $nuevo_costo . "<br>";
+          /*  echo "La cotizacion del dolar es : " . $cotizacion . "<br>";
+            echo "Costo * cotizacion dolar : " . $nuevo_costo . "<br>";*/
 
             $suma_utilidad = $nuevo_costo * $utilidad / 100;
             $nuevo_neto = $nuevo_costo + $suma_utilidad;

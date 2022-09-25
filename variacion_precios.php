@@ -29,26 +29,26 @@ if ($inc) {
 
             $cal_inc = $costo * $inc / 100;
             $costo_inc = $costo + $cal_inc;
-            echo "Costo inicial " . $costo . "<br>".
-            "Costo con incremento del 10% " . $costo_inc . "<br>";
+         /*   echo "Costo inicial " . $costo . "<br>".
+            "Costo con incremento del 10% " . $costo_inc . "<br>";*/
 
             $primer_descto = $costo_inc * $dscto / 100;
-            echo "Primer descto 10% de 334.4 : " . $primer_descto . "<br>";
+          //  echo "Primer descto 10% de 334.4 : " . $primer_descto . "<br>";
             $nuevo_costo3 = $costo_inc - $primer_descto;
-            echo "Costo con descto : " . $nuevo_costo3 . "<br>";
+          //  echo "Costo con descto : " . $nuevo_costo3 . "<br>";
 
             $segundo_descto = $nuevo_costo3 * $dscto2 / 100;
-            echo "2 descto 0% de 300.96 : " . $segundo_descto . "<br>";
+          //  echo "2 descto 0% de 300.96 : " . $segundo_descto . "<br>";
             $nuevo_costo2 = $nuevo_costo3 - $segundo_descto;
-            echo "Costo con 2 descto : " . $nuevo_costo2 . "<br>";
+          //  echo "Costo con 2 descto : " . $nuevo_costo2 . "<br>";
 
             $tercer_descto = $nuevo_costo2 * $dscto3 / 100;
-            echo "3 descto 0% de 300.96 : " . $tercer_descto . "<br>";
+          //  echo "3 descto 0% de 300.96 : " . $tercer_descto . "<br>";
             $nuevo_cost = $nuevo_costo2 - $tercer_descto;
-            echo "Costo con 3 descto : " . $nuevo_cost . "<br>";
+          //  echo "Costo con 3 descto : " . $nuevo_cost . "<br>";
             $nuevo_costo = $nuevo_cost * $cotizacion;
-            echo "La cotizacion del dolar es : " . $cotizacion . "<br>";
-            echo "Costo * cotizacion dolar : " . $nuevo_costo . "<br>";
+          //  echo "La cotizacion del dolar es : " . $cotizacion . "<br>";
+          //  echo "Costo * cotizacion dolar : " . $nuevo_costo . "<br>";
 
             $suma_utilidad = $nuevo_costo * $utilidad / 100;
             $nuevo_neto = $nuevo_costo + $suma_utilidad;
@@ -62,12 +62,11 @@ if ($inc) {
 
             mysqli_query($conexion_bd, "UPDATE productos SET neto_mostrador = '$nuevo_neto',
             precio_final = '$nuevo_final', cotizacion = '$cotizacion', costo = '$costo_inc' 
-            WHERE id= '$cod'");
-
-           
+            WHERE id= '$cod'");           
         }
-        $_SESSION['muestra'] = 'sip';
+        $_SESSION['muestra'] = 'sip';       
     }
+    header("Location: cp_filtros.php");
 }
 if ($dec) {
 
@@ -93,26 +92,26 @@ if ($dec) {
 
             $cal_dec = $costo * $dec / 100;
             $costo_dec = $costo - $cal_dec;
-            echo "Costo inicial " . $costo . "<br>".
-            "Costo con decremento del 10% " . $costo_dec . "<br>";
+          //  echo "Costo inicial " . $costo . "<br>".
+          //  "Costo con decremento del 10% " . $costo_dec . "<br>";
 
             $primer_descto = $costo_dec * $dscto / 100;
-            echo "Primer descto 10%  : " . $primer_descto . "<br>";
+         //   echo "Primer descto 10%  : " . $primer_descto . "<br>";
             $nuevo_costo3 = $costo_dec - $primer_descto;
-            echo "Costo con descto : " . $nuevo_costo3 . "<br>";
+         //   echo "Costo con descto : " . $nuevo_costo3 . "<br>";
 
             $segundo_descto = $nuevo_costo3 * $dscto2 / 100;
-            echo "2 descto 0% de 300.96 : " . $segundo_descto . "<br>";
+          //  echo "2 descto 0% de 300.96 : " . $segundo_descto . "<br>";
             $nuevo_costo2 = $nuevo_costo3 - $segundo_descto;
-            echo "Costo con 2 descto : " . $nuevo_costo2 . "<br>";
+          //  echo "Costo con 2 descto : " . $nuevo_costo2 . "<br>";
 
             $tercer_descto = $nuevo_costo2 * $dscto3 / 100;
-            echo "3 descto 0% de 300.96 : " . $tercer_descto . "<br>";
+        //    echo "3 descto 0% de 300.96 : " . $tercer_descto . "<br>";
             $nuevo_cost = $nuevo_costo2 - $tercer_descto;
-            echo "Costo con 3 descto : " . $nuevo_cost . "<br>";
+         //   echo "Costo con 3 descto : " . $nuevo_cost . "<br>";
             $nuevo_costo = $nuevo_cost * $cotizacion;
-            echo "La cotizacion del dolar es : " . $cotizacion . "<br>";
-            echo "Costo * cotizacion dolar : " . $nuevo_costo . "<br>";
+         //   echo "La cotizacion del dolar es : " . $cotizacion . "<br>";
+          //  echo "Costo * cotizacion dolar : " . $nuevo_costo . "<br>";
 
             $suma_utilidad = $nuevo_costo * $utilidad / 100;
             $nuevo_neto = $nuevo_costo + $suma_utilidad;
@@ -129,7 +128,10 @@ if ($dec) {
             WHERE id= '$cod'");
         }
         $_SESSION['muestra'] = 'sip';
+        
     }
+    header("Location: cp_filtros.php");
 }
-
- header("Location: cp_filtros.php");
+header("Location: cp_filtros.php");
+ 
+?>

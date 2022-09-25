@@ -1,18 +1,28 @@
 <?php
 session_start();
 include('conexion.php');
-
+$idRecep = $_POST['id_recepcion'];
 $id_prove = $_POST['id_prove'];
+$nombre_prove = $_POST['nombre_prove'];
+$fecha_alta = date('Y-m-d');
 if (!$id_prove) {
     $_SESSION['prove'] = "PROVEEDOR ?";
     header("Location: recepcion.php");
 } else {
+    $id_recep = mysqli_query($conexion_bd, "SELECT id FROM recepcion_proveedor");
+    while ($listar_datos = mysqli_fetch_array($id_recep)) {
+        $id_recepcion = $listar_datos['id'];
+    }
 
-    $datos_recep = mysqli_query($conexion_bd, "SELECT id, costo, iva, descto, descto2, descto3, utilidad, 
+
+
+    $datos_recep = mysqli_query($conexion_bd, "SELECT id, cod_prov, producto, costo, iva, descto, descto2, descto3, utilidad, 
 cantidad, cotizacion FROM recepcion");
 
     while ($listar_datos = mysqli_fetch_array($datos_recep)) {
         $id = $listar_datos['id'];
+        $cod_prov = $listar_datos['cod_prov'];
+        $producto = $listar_datos['producto'];
         $costo = $listar_datos['costo'];
         $iva = $listar_datos['iva'];
         $descto = $listar_datos['descto'];
@@ -45,8 +55,15 @@ cantidad, cotizacion FROM recepcion");
             dscto = '$descto', dscto2 = '$descto2', dscto3 = '$descto3', iva = '$iva',
             utilidad = '$utilidad' WHERE id= '$id'");
             $_SESSION['correcto'] = 'CORRECTO';
-        }        
+
+            mysqli_query($conexion_bd, "INSERT INTO recepcion_consulta VALUES($id_recepcion, $id, $id_prove, '$nombre_prove', '$cod_prov', 
+    '$producto', $costo, $iva, $descto, $descto2, $descto3, $utilidad, $cantidad, $cotizacion, '$fecha_alta')");
+   /*   echo $id_recepcion, $id, $id_prove, $cod_prov, 
+      $producto, $costo, $iva, $descto, $descto2, $descto3, $utilidad, $cantidad, $cotizacion;
+        */ }        
     }
+    mysqli_query($conexion_bd, "INSERT INTO recepcion_lista VALUES(default, $id_recepcion, $id_prove, '$nombre_prove', '$fecha_alta')");
+   
     if (!$nuevo_final) {
         $_SESSION['cargar'] = 'FALTAN DATOS';
         header("Location: recepcion.php");

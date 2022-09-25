@@ -18,10 +18,6 @@ if (!$admin || !$mostrador) {
                             <li><a class="dropdown-item" href="#" style="background-color: #5594ed; color: white;">FACTURA</a></li>
                             <li><a class="dropdown-item" href="">NUEVA</a></li>
                             <li><a class="dropdown-item" href="">CONSULTA</a></li>
-                            
-                            <li><a class="dropdown-item" href="#"style="background-color: #5594ed; color: white;">PRESUPUESTO</a></li>
-                            <li><a class="dropdown-item" href="">NUEVO</a></li>
-                            <li><a class="dropdown-item" href="">CONSULTA</a></li>                            
                         </ul>
                     </li>
                     <li class="nav-item dropdown" id="myDropdown">

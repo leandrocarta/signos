@@ -31,8 +31,9 @@ while ($nombre_prod = mysqli_fetch_array($ok)) {
 mysqli_query($conexion_bd, "DELETE FROM recepcion_pre");
 mysqli_query($conexion_bd, "INSERT INTO recepcion_pre VALUES($cod_int, '$cod_prov', 
     '$producto', $costo, $iva, $bonif_1, $bonif_2, $bonif_3, $utilidad, $cantidad)");
-
-/*   echo "cod_prov ". $cod_prov . "<br>";
+    /*
+echo "ID ". $id . "<br>";
+   echo "cod_prov ". $cod_prov . "<br>";
     echo "cod_int: " . $cod_int. "<br>";
 echo "bonif_1: " . $bonif_1. "<br>";
 echo "bonif_2: " . $bonif_2. "<br>";
@@ -44,3 +45,4 @@ echo "producto: " . $producto;*/
 //}
 
 header("Location: recepcion.php");
+?>

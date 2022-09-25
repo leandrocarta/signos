@@ -1,11 +1,9 @@
 <?php
 session_start();
 include('conexion.php');
-$admin = $_SESSION['admin'];
-$mostrador = $_SESSION['mostrador'];
-if (!$admin || !$mostrador) {
+if (!isset ($_SESSION['gral'])) {  
     header("Location: login.php");
-}
+   } 
 ?>
 
 <!doctype html>

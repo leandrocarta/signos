@@ -1,8 +1,8 @@
 <?php
 session_start();
-$admin = $_SESSION['admin'];
-$mostrador = $_SESSION['mostrador'];
-if (!$admin || !$mostrador) {
+$admin = $_SESSION['administrador'];
+
+if (!$admin) {
     header("Location: login.php");
 }
 ?>
@@ -64,23 +64,23 @@ if (!$admin || !$mostrador) {
                 </div>
                 <div class="row">
                     <div class="col-lg-6 my-3 pe-4">
-                        <form class="border p-3" style="margin-right: -11px;" method="POST">
+                        <form action="cp_filtros.php" class="border p-3" style="margin-right: -11px;" method="POST">
                             <div style="color: white;" class="form-text">BÚSQ. POR PROVEEDOR Y CATEGORÍAS</div>
                             <div class="mb-3">
                                 <?php
-                                $proveedor = mysqli_query($conexion_bd, "SELECT id, nombre 
-                                FROM proveedores");
+                                $proveedor1 = mysqli_query($conexion_bd, "SELECT id, nombre 
+                                FROM proveedores order by nombre");
                                 ?>
                                 <select class="form-select" name="proveedor">
-                                    <option>Seleccione un proveedor</option>
+                                    <option value="">Seleccione un proveedor</option>
                                     <?php
-                                    while ($listar_proveedor = mysqli_fetch_array($proveedor)) {
+                                    while ($listar_proveedor = mysqli_fetch_array($proveedor1)) {
                                         $id_prov = $listar_proveedor['id'];
-                                        $nombre = $listar_proveedor['nombre']; ?>
+                                        $nombre_prov = $listar_proveedor['nombre']; ?>
                                         <option value="<?php
                                                         echo $id_prov
                                                         ?>"><?php
-                                                            echo $nombre
+                                                            echo $nombre_prov
                                                             ?></option>
                                     <?php
                                     }
@@ -89,19 +89,19 @@ if (!$admin || !$mostrador) {
                             </div>
                             <div class="mb-3">
                                 <?php
-                                $categoria = mysqli_query($conexion_bd, "SELECT id_categoria , nombre 
-                                FROM categorias");
+                                $categoria1 = mysqli_query($conexion_bd, "SELECT id_categoria , nombre 
+                                FROM categorias order by nombre");
                                 ?>
                                 <select class="form-select" name="categoria">
-                                    <option>Seleccione una categoría</option>
+                                    <option value="">Seleccione una categoría</option>
                                     <?php
-                                    while ($listar_datos = mysqli_fetch_array($categoria)) {
-                                        $id_cat = $listar_datos['id_categoria'];
-                                        $nombre = $listar_datos['nombre']; ?>
+                                    while ($listar_datos_cat = mysqli_fetch_array($categoria1)) {
+                                        $id_cat = $listar_datos_cat['id_categoria'];
+                                        $nombre_cat = $listar_datos_cat['nombre']; ?>
                                         <option value="<?php
                                                         echo $id_cat
                                                         ?>"><?php
-                                                            echo $nombre
+                                                            echo $nombre_cat
                                                             ?></option>
                                     <?php
                                     }
@@ -111,18 +111,18 @@ if (!$admin || !$mostrador) {
                             <div class="mb-3">
                                 <?php
                                 $sub_categoria = mysqli_query($conexion_bd, "SELECT id, nombre 
-                                FROM sub_categorias");
+                                FROM sub_categorias order by nombre");
                                 ?>
                                 <select class="form-select" name="sub_categoria">
-                                    <option>Seleccione una sub categoría</option>
+                                    <option value="">Seleccione una sub categoría</option>
                                     <?php
-                                    while ($listar_datos = mysqli_fetch_array($sub_categoria)) {
-                                        $id = $listar_datos['id'];
-                                        $nombre = $listar_datos['nombre']; ?>
+                                    while ($listar_datos_sub = mysqli_fetch_array($sub_categoria)) {
+                                        $id = $listar_datos_sub['id'];
+                                        $nombre_subCat = $listar_datos_sub['nombre']; ?>
                                         <option value="<?php
                                                         echo $id
                                                         ?>"><?php
-                                                            echo $nombre
+                                                            echo $nombre_subCat
                                                             ?></option>
                                     <?php
                                     }
@@ -281,7 +281,6 @@ if (!$admin || !$mostrador) {
                                             $dscto3 = $listar_datos['dscto3'];
                                             $utilidad = $listar_datos['utilidad'];
 
-
                                             mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES ('$cod_interno', '$cod_proveedor', '$id_cat', '$id_subCat', '$id_proveedor', '$producto', 
                                             '$neto_mostrador', '$iva', '$precio_final', '$moneda', '$cotizacion', '$costo', '$dscto', '$dscto2', '$dscto3', '$utilidad')");
                                         }
@@ -320,50 +319,62 @@ if (!$admin || !$mostrador) {
                                     <?php
                                     }
                                 }
-
-                                if (($_POST['proveedor']) && (!$_POST['categoria']) && (!$_POST['sub_categoria'])) {
-                                    mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                if (($_POST['proveedor']) || ($_POST['categoria']) || ($_POST['sub_categoria'])) {
+                                  //  mysqli_query($conexion_bd, "DELETE FROM update_precios");
                                     $proveedor = $_POST['proveedor'];
                                     $categoria = $_POST['categoria'];
                                     $sub_categoria = $_POST['sub_categoria'];
-                                    $consulta = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final 
-                            FROM productos WHERE id_proveedor = '$proveedor'");
-                                    while ($listar_datos = mysqli_fetch_array($consulta)) {
-                                        $cod_interno = $listar_datos['id'];
-                                        $producto = $listar_datos['producto'];
-                                        $neto_mostrador = $listar_datos['neto_mostrador'];
-                                        $iva = $listar_datos['iva'];
-                                        $precio_final = $listar_datos['precio_final'];
-                                        mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES('$cod_interno',
-                                '$producto', '$neto_mostrador', '$iva', '$precio_final')");
-                                    ?>
-                                        <tbody id="content" class="white">
-                                            <tr>
-                                                <td><?php echo $cod_interno; ?></td>
-                                                <td><?php echo $producto; ?></td>
-                                                <td><?php echo $neto_mostrador; ?></td>
-                                                <td><?php echo $iva; ?></td>
-                                                <td><?php echo $precio_final; ?></td>
-                                            </tr>
-                                        </tbody>
-                                    <?php
+                                     if (($proveedor) && ($categoria) && ($sub_categoria)) {
+                                        mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod_proveedor, id_cat, id_subCat, id_proveedor, producto, neto_mostrador, iva, precio_final,
+                                        moneda, cotizacion, costo, dscto, dscto2, dscto3, utilidad FROM productos WHERE id_proveedor = '$proveedor' AND id_cat = '$categoria' AND id_subCat = '$sub_categoria'");
+                                    } elseif (($proveedor) && ($categoria)) {
+                                        mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod_proveedor, id_cat, id_subCat, id_proveedor, producto, neto_mostrador, iva, precio_final,
+                                        moneda, cotizacion, costo, dscto, dscto2, dscto3, utilidad FROM productos WHERE id_proveedor = $proveedor AND id_cat = $categoria");
+                                    } elseif (($proveedor) && ($sub_categoria)) {
+                                        mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod_proveedor, id_cat, id_subCat, id_proveedor, producto, neto_mostrador, iva, precio_final,
+                                        moneda, cotizacion, costo, dscto, dscto2, dscto3, utilidad FROM productos WHERE id_proveedor = '$proveedor' AND id_subCat = '$sub_categoria'");
+                                    } elseif (($categoria) && ($sub_categoria)) {
+                                        mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod_proveedor, id_cat, id_subCat, id_proveedor, producto, neto_mostrador, iva, precio_final,
+                                        moneda, cotizacion, costo, dscto, dscto2, dscto3, utilidad FROM productos WHERE id_cat = '$categoria' AND id_subCat = '$sub_categoria'");
+                                    } elseif ($proveedor) {
+                                        mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod_proveedor, id_cat, id_subCat, id_proveedor, producto, neto_mostrador, iva, precio_final,
+                                        moneda, cotizacion, costo, dscto, dscto2, dscto3, utilidad FROM productos WHERE id_proveedor = '$proveedor'");
+                                    }elseif ($categoria) {
+                                        mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod_proveedor, id_cat, id_subCat, id_proveedor, producto, neto_mostrador, iva, precio_final,
+                                        moneda, cotizacion, costo, dscto, dscto2, dscto3, utilidad FROM productos WHERE id_cat = '$categoria'");
+                                    }elseif ($sub_categoria) {
+                                        mysqli_query($conexion_bd, "DELETE FROM update_precios");
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod_proveedor, id_cat, id_subCat, id_proveedor, producto, neto_mostrador, iva, precio_final,
+                                        moneda, cotizacion, costo, dscto, dscto2, dscto3, utilidad FROM productos WHERE id_subCat = '$sub_categoria'");
                                     }
-                                } else if (($_POST['proveedor']) && ($_POST['categoria'])) {
-                                    mysqli_query($conexion_bd, "DELETE FROM update_precios");
-                                    $proveedor = $_POST['proveedor'];
-                                    $categoria = $_POST['categoria'];
 
-                                    $consulta = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final 
-                            FROM productos WHERE id_proveedor = '$proveedor' AND id_cat = '$categoria'");
 
                                     while ($listar_datos = mysqli_fetch_array($consulta)) {
                                         $cod_interno = $listar_datos['id'];
+                                        $cod_proveedor = $listar_datos['cod_proveedor'];
+                                        $id_cat = $listar_datos['id_cat'];
+                                        $id_subCat = $listar_datos['id_subCat'];
+                                        $id_proveedor = $listar_datos['id_proveedor'];
                                         $producto = $listar_datos['producto'];
                                         $neto_mostrador = $listar_datos['neto_mostrador'];
                                         $iva = $listar_datos['iva'];
                                         $precio_final = $listar_datos['precio_final'];
-                                        mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES('$cod_interno',
-                                '$producto', '$neto_mostrador', '$iva', '$precio_final')");
+                                        $moneda = $listar_datos['moneda'];
+                                        $cotizacion = $listar_datos['cotizacion'];
+                                        $costo = $listar_datos['costo'];
+                                        $dscto = $listar_datos['dscto'];
+                                        $dscto2 = $listar_datos['dscto2'];
+                                        $dscto3 = $listar_datos['dscto3'];
+                                        $utilidad = $listar_datos['utilidad'];
+
+                                        mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES ('$cod_interno', '$cod_proveedor', '$id_cat', '$id_subCat', '$id_proveedor', '$producto', 
+                                        '$neto_mostrador', '$iva', '$precio_final', '$moneda', '$cotizacion', '$costo', '$dscto', '$dscto2', '$dscto3', '$utilidad')");
                                     ?>
                                         <tbody id="content" class="white">
                                             <tr>
@@ -372,33 +383,7 @@ if (!$admin || !$mostrador) {
                                                 <td><?php echo $neto_mostrador; ?></td>
                                                 <td><?php echo $iva; ?></td>
                                                 <td><?php echo $precio_final; ?></td>
-                                            </tr>
-                                        </tbody>
-                                    <?php
-                                    }
-                                } else if (($_POST['proveedor']) && ($_POST['categoria']) && ($_POST['sub_categoria'])) {
-                                    mysqli_query($conexion_bd, "DELETE FROM update_precios");
-                                    $proveedor = $_POST['proveedor'];
-                                    $categoria = $_POST['categoria'];
-                                    $sub_categoria = $_POST['sub_categoria'];
-                                    $consulta = mysqli_query($conexion_bd, "SELECT id, producto, neto_mostrador, iva, precio_final 
-                            FROM productos WHERE id_proveedor = '$proveedor' AND id_cat = '$categoria' AND id_subCat = '$categoria'");
-                                    while ($listar_datos = mysqli_fetch_array($consulta)) {
-                                        $cod_interno = $listar_datos['id'];
-                                        $producto = $listar_datos['producto'];
-                                        $neto_mostrador = $listar_datos['neto_mostrador'];
-                                        $iva = $listar_datos['iva'];
-                                        $precio_final = $listar_datos['precio_final'];
-                                        mysqli_query($conexion_bd, "INSERT INTO update_precios VALUES('$cod_interno',
-                                '$producto', '$neto_mostrador', '$iva', '$precio_final')");
-                                    ?>
-                                        <tbody id="content" class="white">
-                                            <tr>
-                                                <td><?php echo $cod_interno; ?></td>
-                                                <td><?php echo $producto; ?></td>
-                                                <td><?php echo $neto_mostrador; ?></td>
-                                                <td><?php echo $iva; ?></td>
-                                                <td><?php echo $precio_final; ?></td>
+                                                <td><a href="elimina_prod.php?id=<?php echo $id ?>" style="color:white;" class="btn btn-danger">X</a></td>
                                             </tr>
                                         </tbody>
                                 <?php
@@ -415,13 +400,13 @@ if (!$admin || !$mostrador) {
                         <form action="variacion_precios_moneda.php" method="POST" class="row g-3">
                             <div class="col-auto">
                                 <?php
-                                $proveedor = mysqli_query($conexion_bd, "SELECT id, nombre 
-                                FROM proveedores");
+                                $proveedor_cotizacion = mysqli_query($conexion_bd, "SELECT id, nombre 
+                                FROM proveedores order by nombre");
                                 ?>
                                 <select class="form-select" name="proveedor">
                                     <option>Seleccione un proveedor</option>
                                     <?php
-                                    while ($listar_proveedor = mysqli_fetch_array($proveedor)) {
+                                    while ($listar_proveedor = mysqli_fetch_array($proveedor_cotizacion)) {
                                         $id_prov = $listar_proveedor['id'];
                                         $nombre = $listar_proveedor['nombre']; ?>
                                         <option value="<?php

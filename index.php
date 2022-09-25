@@ -1,12 +1,9 @@
 <?php
 session_start();
- 
-$admin = $_SESSION['admin'];
-$mostrador = $_SESSION['mostrador'];
-if (!$admin || !$mostrador) {
-    header("Location: login.php");
-}
 
+if (!isset ($_SESSION['gral'])) {  
+ header("Location: login.php");
+} 
 
  
 

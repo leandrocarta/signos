@@ -25,12 +25,6 @@ if (!$admin || !$mostrador) {
                                     <li><a class="dropdown-item disabled" href="#" aria-disabled="true">CONSULTA</a></li>
                                 </ul>
                             </li>
-                            <li> <a class="dropdown-item disabled" href="#"> PRESUPUESTO &raquo; </a>
-                                <ul class="submenu dropdown-menu">
-                                    <li><a class="dropdown-item disabled" href="#">NUEVO</a></li>
-                                    <li><a class="dropdown-item disabled" href="#">CONSULTA</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown" id="myDropdown">

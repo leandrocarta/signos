@@ -23,7 +23,7 @@ if ($num_rows > 0) {
         $html .= '<td>' . $row['id'] . '</td>';
         $html .= '<td>' . $row['cod_proveedor'] . '</td>';
         $html .= '<td>' . $row['producto'] . '</td>';
-        $html .= '<td><a href="recepcion_modifica.php?id='. $row['id'].'" style="color:white;" class="btn btn-warning" >ENVIAR</a></td>';        
+        $html .= '<td><a href="recepcion_modifica.php?id='. $row['id'].'" style="color:white;" class="btn btn-success" >ENVIAR</a></td>';        
         $html .= '</tr>';
     }
 } else {

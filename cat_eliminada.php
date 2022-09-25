@@ -5,10 +5,10 @@ $nombre_cat = $_GET['nombre'];
 include('conexion.php');
 
 
-$chek = mysqli_query($conexion_bd, "SELECT id_subCategoria, nombre FROM sub_categorias 
+$chek = mysqli_query($conexion_bd, "SELECT id, nombre FROM sub_categorias 
 where id_categoria = $id ");
 while ($chek_subCat = mysqli_fetch_array($chek)) { 
-     $id_subCat = $chek_subCat['id_subCategoria'];
+     $id_subCat = $chek_subCat['id'];
      $nombre = $chek_subCat['nombre'];
 }
 if($id_subCat){

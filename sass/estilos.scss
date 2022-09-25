@@ -16,7 +16,7 @@ label {
 }
 
 .btn {
-    --bs-btn-padding-y: 0;
+    //  --bs-btn-padding-y: 0;
 }
 
 body {
@@ -197,4 +197,9 @@ button {
 
 .fa-window-close {
     margin-top: 5px;
+}
+
+.recepcion_consulta {
+    border: 1px black;
+    box-shadow: 5px 5px 8px black;
 }

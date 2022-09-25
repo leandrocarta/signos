@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (!isset ($_SESSION['gral'])) {  
+    header("Location: login.php");
+   } 
+?>
 <!doctype html>
 <html lang="es">
 
@@ -24,20 +30,20 @@
                 <div class="col-lg-4 pe-3">
                     <div class="row mb-2">
                         <div class="col-lg-12 bg-success">
-                            <form action="recepcion_proveedor.php" method="POST" class="d-flex">
+                            <form action="venta_cliente_prov.php" method="POST" class="d-flex">
                                 <div class="col-md-8" style="padding: 5px;">
                                     <?php
                                     $proveedor = mysqli_query($conexion_bd, "SELECT id, nombre 
-                                        FROM proveedores order by nombre");
+                                        FROM clientes order by nombre");
                                     ?>
-                                    <select class="form-select" name="id_p" id="prove">
-                                        <option>Seleccione un proveedor</option>
+                                    <select class="form-select" name="id_cli" id="prove">
+                                        <option>Seleccione un Cliente</option>
                                         <?php
                                         while ($listar_proveedor = mysqli_fetch_array($proveedor)) {
-                                            $id_prov = $listar_proveedor['id'];
+                                            $id_cli = $listar_proveedor['id'];
                                             $nombre = $listar_proveedor['nombre']; ?>
                                             <option value="<?php
-                                                            echo $id_prov
+                                                            echo $id_cli
                                                             ?>"><?php
                                                                 echo $nombre
                                                                 ?></option>
@@ -92,26 +98,24 @@
                 <div class="col-lg-8 ps-3">
                     <div class="row bg-secondary">
                         <div class="col-lg-12 py-2">
-                            <form action="recepcion_precarga.php" method="POST" class="row g-3">
+                            <form action="ventas_precarga.php" method="POST" class="row g-3">
                                 <?php
-                                $update_prod = mysqli_query($conexion_bd, "SELECT * FROM recepcion_pre");
+                                $update_prod = mysqli_query($conexion_bd, "SELECT * FROM ventas_pre");
                                 while ($listar_prod = mysqli_fetch_array($update_prod)) {
                                     $id = $listar_prod['id'];
                                     $cod_prov = $listar_prod['cod_prov'];
                                     $producto = $listar_prod['producto'];
-                                    $costo = $listar_prod['costo'];
+                                    $neto_mostrador = $listar_prod['neto_mostrador'];
                                     $iva = $listar_prod['iva'];
-                                    $descto = $listar_prod['descto'];
-                                    $descto2 = $listar_prod['descto2'];
-                                    $descto3 = $listar_prod['descto3'];
-                                    $utilidad = $listar_prod['utilidad'];
+                                    $precio_final = $listar_prod['precio_final'];
                                     $cantidad = $listar_prod['cantidad'];
                                 }
+
                                 ?>
 
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <label for="nombre_prod">NOMBRE PRODUCTO</label>
-                                    <input type="text" class="form-control" value="<?php echo $producto ?>" style="text-transform:uppercase;" disabled>
+                                    <input type="text" class="form-control" value="<?php echo $producto ?>" style="text-transform:uppercase;">
                                     <input type="hidden" class="form-control" name="nombre_prod" value="<?php echo $producto ?>">
                                 </div>
                                 <div class="col-md-2">
@@ -119,48 +123,37 @@
                                     <input type="text" class="form-control" value="<?php echo $id ?>" style="text-transform:uppercase;" disabled>
                                     <input type="hidden" class="form-control" name="cod_int" value="<?php echo $id ?>">
                                 </div>
-                                <div class="col-md-3">
-                                    <label for="cod_prov">CÓDIGO PROVEEDOR</label>
-                                    <input type="text" class="form-control" value="<?php echo $cod_prov ?>" style="text-transform:uppercase;" disabled>
-                                    <input type="hidden" class="form-control" name="cod_prov" value="<?php echo $cod_prov ?>">
+                                <div class="col-md-2">
+                                    <label for="cantidad">PRECIO</label>
+                                    <input type="number" step=".001" name="precio" class="form-control" value="<?php echo $precio_final ?>" disabled>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="cantidad">CANTIDAD</label>
-                                    <input type="number" step=".001" name="cantidad" class="form-control" value="<?php echo $cantidad ?>">
+                                    <input id="foco_fact" type="number" step=".001" name="cantidad" class="form-control" value="1" >
                                 </div>
+                                <?php
+                                if ($id) { ?>
+                                    <script>
+                                        foco();
+
+                                        function foco() {
+                                            document.getElementById("foco_fact").focus();
+                                        }
+                                    </script>
+                                <?php  }
+                                ?>
+
                                 <div class="col-md-2">
-                                    <label for="costo">COSTO</label>
-                                    <input type="number" step=".001" name="costo" class="form-control" value="<?php echo $costo ?>" required>
+                                    <label for="cod_prov">DESCTO</label>
+                                    <input type="number" name="descto_prod" value="0.00" class="form-control" style="text-transform:uppercase;">
+
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="bonificacion_1">BONIF. 1</label>
-                                    <input type="number" step=".001" name="bonificacion_1" class="form-control" value="<?php echo $descto ?>">
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="bonificacion_2">BONIF. 2</label>
-                                    <input type="number" step=".001" name="bonificacion_2" class="form-control" value="<?php echo $descto2 ?>">
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="bonificacion_3">BONIF. 3</label>
-                                    <input type="number" step=".001" name="bonificacion_3" class="form-control" value="<?php echo $descto3 ?>">
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="utilidad">UTILIDAD</label>
-                                    <input type="text" class="form-control" name="utilidad" value="<?php echo $utilidad ?>" style="text-transform:uppercase;">
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="iva">IVA</label>
-                                    <select class="form-select" name="iva">
-                                        <option value="<?php echo $iva ?>"><?php echo $iva ?></option>
-                                        <option value="10.5">10.5</option>
-                                        <option value="21">21.00</option>
-                                    </select>
-                                </div>
+
                                 <div class="col-md-6">
                                     <button type="submit" style="padding: 5px;" class=" form-control btn btn-primary">AGREGAR</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="recepcion_modifica.php?borra='borra'" style="padding: 5px;" type="submit" class="form-control btn btn-danger">CANCELAR</a>
+                                    <a href="ventas_modifica.php?borra='borra'" style="padding: 5px;" type="submit" class="form-control btn btn-danger">CANCELAR</a>
                                 </div>
                             </form>
                         </div>
@@ -173,43 +166,68 @@
                                         <tr>
                                             <th scope="col">CODIDO</th>
                                             <th scope="col">PRODUCTO</th>
-                                            <th scope="col">COSTO</th>
-                                            <th scope="col">BONIF</th>
-                                            <th scope="col">BONIF</th>
-                                            <th scope="col">BONIF</th>
-                                            <th scope="col">UTIL.</th>
+                                            <th scope="col">P.NETO</th>
+                                            <th scope="col">DESCTO.</th>
                                             <th scope="col">IVA</th>
-                                            <th scope="col">CANT.</th>
+                                            <th scope="col">P.FINAL</th>
+                                            <th scope="col">CANTIDAD</th>
                                             <th scope="col">ELIMINAR</th>
                                         </tr>
                                     </thead>
                                     <?php
+                                    if($_SESSION['puesto1']){                                        
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod, producto, neto_mostrador, descto, iva,
+                                        precio_final, cantidad, total FROM puesto1");
+                                        $tabla = 'puesto1';
+                                    } else  if($_SESSION['puesto2']){                                        
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod, producto, neto_mostrador, descto, iva,
+                                        precio_final, cantidad, total FROM puesto2");
+                                         $tabla = 'puesto2';
+                                    } else  if($_SESSION['puesto3']){                                        
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod, producto, neto_mostrador, descto, iva,
+                                        precio_final, cantidad, total FROM puesto3");
+                                         $tabla = 'puesto3';
+                                    } else  if($_SESSION['puesto4']){                                        
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod, producto, neto_mostrador, descto, iva,
+                                        precio_final, cantidad, total FROM puesto4");
+                                         $tabla = 'puesto4';
+                                    } else  if($_SESSION['puesto5']){                                        
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod, producto, neto_mostrador, descto, iva,
+                                        precio_final, cantidad, total FROM puesto5");
+                                         $tabla = 'puesto5';
+                                    } else  if($_SESSION['puesto6']){                                        
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod, producto, neto_mostrador, descto, iva,
+                                        precio_final, cantidad, total FROM puesto6");
+                                         $tabla = 'puesto6';
+                                    } else  if($_SESSION['puesto7']){                                        
+                                        $consulta = mysqli_query($conexion_bd, "SELECT id, cod, producto, neto_mostrador, descto, iva,
+                                        precio_final, cantidad, total FROM puesto7");
+                                         $tabla = 'puesto7';
+                                    }
 
-                                    $consulta = mysqli_query($conexion_bd, "SELECT id, cod_prov, producto, costo, iva, descto, 
-                                descto2, descto3, utilidad, cantidad  FROM recepcion");
+                                   
                                     if ($consulta) {
                                         while ($listar_datos = mysqli_fetch_array($consulta)) {
                                             $cod_interno = $listar_datos['id'];
+                                            $cod = $listar_datos['cod'];
                                             $producto = $listar_datos['producto'];
-                                            $costo = $listar_datos['costo'];
-                                            $iva = $listar_datos['iva'];
+                                            $neto_mostrador = $listar_datos['neto_mostrador'];
                                             $descto = $listar_datos['descto'];
-                                            $descto2 = $listar_datos['descto2'];
-                                            $descto3 = $listar_datos['descto3'];
-                                            $utilidad = $listar_datos['utilidad'];
-                                            $cantidad = $listar_datos['cantidad']; ?>
+                                            $iva = $listar_datos['iva'];
+                                            $precio_final = $listar_datos['precio_final'];
+                                            $cantidad = $listar_datos['cantidad'];
+                                            $total = $listar_datos['total']; ?>
                                             <tbody id="content" class="white">
                                                 <tr>
-                                                    <td><?php echo $cod_interno; ?></td>
+                                                    <td><?php echo $cod; ?></td>
                                                     <td><?php echo $producto; ?></td>
-                                                    <td><?php echo $costo; ?></td>
+                                                    <td><?php echo $neto_mostrador; ?></td>
                                                     <td><?php echo $descto; ?></td>
-                                                    <td><?php echo $descto2; ?></td>
-                                                    <td><?php echo $descto3; ?></td>
-                                                    <td><?php echo $utilidad; ?></td>
                                                     <td><?php echo $iva; ?></td>
+                                                    <td><?php echo $precio_final; ?></td>
                                                     <td><?php echo $cantidad; ?></td>
-                                                    <td><a href="elimina_prod_recepcion.php?id=<?php echo $cod_interno ?>" style="color:white;" class="btn btn-danger">X</a></td>
+                                                    <td><?php echo $total; ?></td>
+                                                    <td><a href="elimina_prod_venta.php?id=<?php echo $cod_interno?> && bd=<?php echo $tabla ?>" style="color:white;" class="btn btn-danger">X</a></td>
                                                 </tr>
                                             </tbody>
                                     <?php
@@ -223,33 +241,34 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12 bg-secondary">
-                            <form action="recepcion_guarda.php" method="POST" class="d-flex">
+                            <form action="ventas_guarda.php" method="POST" class="d-flex">
                                 <div class="col-md-4" style="padding: 5px;">
-                                <input type="hidden" name="uno" value="1">
+                                    <input type="hidden" name="uno" value="1">
                                     <?php
-                                    $proveedor_recp = mysqli_query($conexion_bd, "SELECT id, id_prov, nombre 
-                                    FROM recepcion_proveedor");
+                                    $cliente_venta = mysqli_query($conexion_bd, "SELECT id, id_cli, nombre 
+                                    FROM clientes_ventas");
 
                                     ?>
                                     <?php
-                                    while ($listar_proveedor = mysqli_fetch_array($proveedor_recp)) {
-                                        $id = $listar_proveedor['id'];
-                                        $id_proved = $listar_proveedor['id_prov'];
+                                    while ($listar_proveedor = mysqli_fetch_array($cliente_venta)) {
+                                        $id_venta = $listar_proveedor['id'];
+                                        $id_cli = $listar_proveedor['id_cli'];
                                         $name = $listar_proveedor['nombre']; ?>
                                     <?php
                                     }
-                                    if ($proveedor_recp) { ?>
-                                     <input name="id_recepcion" type="hidden" value="<?php echo $id ?>">
-                                     <input name="nombre_prove" type="hidden" value="<?php echo $name ?>">
-                                        <input name="id_prove" type="hidden" value="<?php echo $id_proved ?>">
+                                    if ($cliente_venta) { ?>
+                                        <input name="id_venta" type="hidden" value="<?php echo $id ?>">
+                                        <input name="nombre_cli" type="hidden" value="<?php echo $name ?>">
+                                        <input name="id_cli" type="hidden" value="<?php echo $id_cli ?>">
+                                        <input name="tabla" type="hidden" value="<?php echo $tabla ?>">
                                         <input class="form-control" type="text" value="<?php echo $name ?>" disabled>
                                     <?php } ?>
                                 </div>
                                 <div class="col-md-4 py-2 px-2">
-                                    <button type="submit" style="padding: 5px;" class=" form-control btn btn-primary">RECEPCIONAR</button>
+                                    <button type="submit" style="padding: 5px;" class=" form-control btn btn-primary">GUARDAR FACTURA</button>
                                 </div>
                                 <div class="col-md-4 py-2">
-                                    <a href="recepcion_modifica.php?borra2='borra'" style="padding: 5px;" type="submit" class="form-control btn btn-danger">CANCELAR</a>
+                                    <a href="ventas_modifica.php?borra2='borra'" style="padding: 5px;" type="submit" class="form-control btn btn-danger">CANCELAR</a>
                                 </div>
                             </form>
                         </div>
@@ -266,7 +285,7 @@
         function getData() {
             let input = document.getElementById("campo").value
             let content = document.getElementById("content")
-            let url = "search_nombre_recepcion.php";
+            let url = "productos_venta_nombre.php";
 
             let formaData = new FormData;
             formaData.append('campo', input);
@@ -279,13 +298,18 @@
                 }).catch(err => console.log(err))
         }
     </script>
-    <script>
-        foco();
 
-        function foco() {
+    <?php
+    if (!$id) { ?>
+        <script>
+            foco();
 
-            document.getElementById("prove").focus();
-        }
+            function foco() {
+                document.getElementById("prove").focus();
+            }
+        </script>
+    <?php  }
+    ?>
     </script>
     <script>
         getDataCodInt()
@@ -294,7 +318,7 @@
         function getDataCodInt() {
             let input = document.getElementById("cod_int").value
             let content = document.getElementById("content")
-            let url = "search_cod_int_recepcion.php";
+            let url = "productos_venta_codint.php";
 
             let formaData = new FormData;
             formaData.append('cod_int', input);
@@ -314,7 +338,7 @@
         function getDataCodProv() {
             let input = document.getElementById("cod_prov").value
             let content = document.getElementById("content")
-            let url = "search_cod_prov_recepcion.php";
+            let url = "productos_venta_codprov.php";
 
             let formaData = new FormData;
             formaData.append('cod_prov', input);
@@ -375,6 +399,46 @@
         unset($_SESSION['cargar']);
     }
     ?>
+    <?php
+    if (isset($_SESSION['cantidad'])) { ?>
+        <script>
+            swal({
+                title: '<?php echo $_SESSION['cantidad']; ?>',
+                text: "No ha ingresado la cantidad a Facturar!!!",
+                icon: "error",
+                button: "Continue aquí!!",
+            });
+        </script>
+    <?php
+        unset($_SESSION['cantidad']);
+    }
+    ?>
+    <?php
+    if ($id) { ?>
+        <script>
+            foco();
+
+            function foco() {
+                document.getElementById("foco_fact").focus();
+            }
+        </script>
+    <?php  }
+    ?>
+    <?php
+    if (isset($_SESSION['cli'])) { ?>  
+        <script>
+            swal({
+                title: '<?php echo $_SESSION['cli']; ?>',
+                text: "Seleccione un Cliente para poder realizar la Venta!!!",
+                icon: "error",
+                button: "Continue aquí!!",
+            });
+        </script>
+    <?php
+        unset($_SESSION['cli']);
+    }
+    ?>
+
 </body>
 
 </html>

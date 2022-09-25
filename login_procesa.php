@@ -13,26 +13,30 @@ while ($listar_datos = mysqli_fetch_array($consulta_usuario)) {
     $pass = $listar_datos['pass'];
     $nivel_rango = $listar_datos['nivel'];
 }
-
 if ($usuario === $user) {
     if ($password === $pass) {
-        $_SESSION['admin'] = $usuario;
-        $_SESSION['mostrador'] = $usuario;
-        header("Location: index.php");
-    } else {
+        if($nivel_rango === 'administrador'){
+          //  echo "Entre en administrador soy:" . $usuario;
+            $_SESSION['administrador'] = $usuario;
+            $_SESSION['gral'] = $usuario;
+            header("Location: index.php");
+        }else{
+          //  echo "Entre en mostradorsoy: " . $usuario;
+            $_SESSION['mostrador'] = $usuario;
+            $_SESSION['gral'] = $usuario;
+            header("Location: index.php");
+        }      
         
+    } else {   
+       // echo "Entre en Pass incorrecto";     
         $_SESSION['pass_incorrecto'] = $password;
         header("Location: login.php");
     }
 } else {
+  //  echo "Entre en Login";
     $_SESSION['no_existe_usuario'] = $usuario;
-    header("Location: login.php");
+   header("Location: login.php");
 }
 
 
-/*echo $_SESSION['administrador'] = $usuario;
-echo $user . ' Usuario' . "\n"
-. $pass . ' Pass' . "\n" 
-. $nivel_rango . ' rango';
-*/
 ?>
